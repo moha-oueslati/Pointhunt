@@ -1,7 +1,10 @@
 import { Text} from "react-native";
 
 
-export default function PointInfo({data, ndex}){
+export default function PointInfo({ data, ndex}:{
+  data: { mission: string; points: number };
+  ndex: number;
+}){
     return(
         <div>
             <input type="checkbox" name="checker"/>
