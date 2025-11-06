@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import PointInfo from "./PointInfo";
+import TaskInfoHeader from "./TaskInfoHeader";
 
 export default function Index() {
   
@@ -15,9 +16,9 @@ export default function Index() {
         alignItems: "center",
       }}
     >    
-        
+    <TaskInfoHeader task={{ mission: "Bada i strömmen", points: 10, index: 1 }} />
 
-        <button> Host</button>
+    <button> Host</button>
     <button>
       Guest
     </button>
