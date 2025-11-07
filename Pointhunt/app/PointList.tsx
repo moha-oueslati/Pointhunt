@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import PointInfo from "./PointInfo";
+import React from "react";
 
 
 export default function PointList(){
