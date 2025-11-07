@@ -1,12 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react",
-    "jsx": "react",
-    "jsx": "react",
-    "jsx": "react",
-    "jsx": "react",
-    "jsx": "react",
     "strict": true,
     "paths": {
       "@/*": [
@@ -15,7 +9,7 @@
     }
   },
   "include": [
-, "app/homeStyle.js"    "**/*.ts",
+    "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
