@@ -67,7 +67,6 @@ codeTextfield: { // Till när man lägger in kod
   alignItems: "center",
 },
 writeTextfield: { // För hostsidan när man skriver in titel/namn på host
-  backgroundColor: '#614417',
   paddingVertical: 8,
   borderRadius: 8,
   width: 225,
