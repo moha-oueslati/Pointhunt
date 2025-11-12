@@ -1,15 +1,29 @@
+import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Index() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>    
     <Text style={styles.title}> Welcome to Pointhunt! </Text>
 
-    <TouchableOpacity style={styles.greenButton}>
+    <TouchableOpacity
+      style={styles.greenButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Host"
+      onPress={() => console.log('Join as Host pressed')}
+    >
       <Text style={styles.lightGreenText}> Join as Host </Text>
     </TouchableOpacity>
         
-    <TouchableOpacity style={styles.brownButton}>
+    <TouchableOpacity
+      style={styles.brownButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Guest"
+      onPress={() => router.push('/guest')}
+    >
       <Text style={styles.lightBrownText}> Join as Guest </Text>
     </TouchableOpacity>
     </View>
