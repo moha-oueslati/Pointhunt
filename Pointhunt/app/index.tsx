@@ -1,5 +1,6 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
+import PointInfo from "./PointInfo";
 
 export default function Index() {
   
@@ -18,16 +19,17 @@ export default function Index() {
     <TouchableOpacity style={styles.brownButton}>
       <Text style={styles.lightBrownText}> Join as Guest </Text>
     </TouchableOpacity>
+    {/* <PointInfo data={{mission: "Exempeluppgift", points: 10}} ndex={1} /> */}
     </View>
-  ); 
-}
+    );
+  }
 
-const styles = StyleSheet.create({
-container: {
+  const styles = StyleSheet.create({
+    container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#A8EFAB" //ljusgrönt till bakgrunden
+    backgroundColor: "#A8EFAB"
 },
 title: {
     fontSize: 32,
