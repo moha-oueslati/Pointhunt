@@ -1,4 +1,5 @@
-import { Text} from "react-native";
+import React from "react";
+import {Text} from "react-native";
 
 // Guest
 export default function PointInfo({ data, ndex}:{
