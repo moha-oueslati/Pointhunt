@@ -1,4 +1,4 @@
-export interface Task {
+export interface Task { // HOST
   id: string;
   title: string;
   summary: string;
