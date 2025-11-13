@@ -1,7 +1,7 @@
 import { Text, View } from "react-native";
 import PointInfo from "./PointInfo";
 
-
+// Guest
 export default function PointList(){
     const PointList = [{
         mission:"Stå på händerna i 10 sekunder",

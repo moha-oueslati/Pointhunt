@@ -1,5 +1,6 @@
 import { Text, TouchableOpacity } from 'react-native'
 
+// Guest
 export default function TeamButton({index, change, topnum}:{index: number, change:(value: number) => void, topnum: number}){
     return(
         <>

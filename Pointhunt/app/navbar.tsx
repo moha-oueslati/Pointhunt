@@ -1,5 +1,6 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 
+// Guest
 export default function Navbar(){
     return (
         <View style={{
