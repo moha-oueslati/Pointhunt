@@ -87,7 +87,7 @@ export default function Host() {
           <View style={styles.emptyState}>
             <Text style={styles.emptyStateTitle}>Inga Tasks än</Text>
             <Text style={styles.emptyStateText}>
-              Tryck på 'Skapa ny task" för att lägga till din första task!
+              Tryck på Skapa ny task för att lägga till din första task!
             </Text>
           </View>
         )}

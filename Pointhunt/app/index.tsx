@@ -13,7 +13,7 @@ export default function Index() {
       style={styles.greenButton}
       accessibilityRole="button"
       accessibilityLabel="Join as Host"
-      onPress={() => console.log('Join as Host pressed')}
+      onPress={() => router.push('/host')}
     >
       <Text style={styles.lightGreenText}> Join as Host </Text>
     </TouchableOpacity>
