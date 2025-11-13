@@ -18,12 +18,12 @@ export default function Index() {
         </TouchableOpacity>
       </Link>
         
-      <TouchableOpacity style={styles.brownButton}>
-        <Text style={styles.lightBrownText}> Join as Guest </Text>
-      </TouchableOpacity>
+    <TouchableOpacity style={styles.brownButton}>
+      <Text style={styles.lightBrownText}> Join as Guest </Text>
+    </TouchableOpacity>
     </View>
-  ); 
-}
+    );
+  }
 
 const styles = StyleSheet.create({
   container: {
