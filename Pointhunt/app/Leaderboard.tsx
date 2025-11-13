@@ -14,12 +14,11 @@ export default function Leaderboard() {
         }
     ]
     
-    return(
+    return( //Mappar alla team objekt (när det väl inte är hårdkodat)
         <View>
-            <h2>Teams</h2>
             <li>
                 {teams.map(team => (
-                    <p> {team.name} Total points: {team.points} </p>
+                    <p key={team.name + 12345}> {team.name} Total points: {team.points} </p>
                 ))}
             </li>
         </View>
