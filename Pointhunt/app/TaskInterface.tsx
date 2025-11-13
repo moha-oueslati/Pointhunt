@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import TeamButton from './TeamButton'
+import TeamButton from './TeamButton';
+import Navbar from './navbar';
+
 
 // Guest 
 export default function TaskInterface(){
@@ -93,6 +95,9 @@ export default function TaskInterface(){
                 alignItems: "flex-end"
             }}>
                 <TouchableOpacity><Text>Skicka</Text></TouchableOpacity>
+            </View>
+            <View>
+                <Navbar />
             </View>
         </>
         
