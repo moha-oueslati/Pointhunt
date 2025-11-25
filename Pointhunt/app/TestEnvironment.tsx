@@ -4,8 +4,8 @@
 import React from 'react';
 import { View } from "react-native";
 import PointInfo from './PointInfo';
-import Leaderboard from './Leaderboard';
-import DisplayTeam from './TeamInfo';
+import Leaderboard from './components/Leaderboard';
+import DisplayTeam from './components/TeamInfo';
 
 export default function TestEnvironment() {
     return(
