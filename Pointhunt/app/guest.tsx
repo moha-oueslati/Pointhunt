@@ -14,7 +14,7 @@
         }}
         >
     <Text style={styles.title}> Join!</Text>
-            <TextInput placeholder ="Enter code" 
+            <TextInput placeholder ="Skriv kod" 
             value ={code}
             onChangeText ={setCode}
                     style={styles.input}
