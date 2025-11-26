@@ -1,8 +1,13 @@
     import { View, TouchableOpacity, Text,TextInput , StyleSheet } from "react-native";
     import React, { useState } from "react";
+    import { useRouter } from "expo-router";
+    
+
 
 
     export default function Guest() {
+          const router = useRouter();
+
   const [code, setCode] = useState("");
 
     return (
@@ -23,8 +28,8 @@
         <TouchableOpacity
         style={styles.button}
         onPress={() => {
-          console.log("Button Pressed");
-          console.log(code);
+          if(code === "1234") router.push('/waiting');
+          
         }}
       >
         <Text style={styles.buttonText}>Join...</Text>
