@@ -1,9 +1,21 @@
 import React from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { useEffect } from "react";
+import { codeGenerate } from "../firebase/codeGenerator";
+
 
 export default function Index() {
   const router = useRouter();
+
+
+   useEffect(() => {
+    async function run() {
+      const code = await codeGenerate("placeholder");
+      console.log(code)
+    }
+    run();
+  }, []);
 
   return (
     <View style={styles.container}>    
