@@ -19,7 +19,11 @@ export default function Guest() {
 
     if (snap.exists()) {
 
-      router.push("/waiting");
+      router.push({
+  pathname: "/waiting",
+  params: { code: code }
+});
+
     } else {
       Alert.alert("Invalid Code", "No game found with that code.");
     }

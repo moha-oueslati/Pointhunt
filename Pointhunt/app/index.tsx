@@ -1,7 +1,7 @@
-import React from "react";
+
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { codeGenerate } from "../firebase/codeGenerator";
 
 
@@ -9,10 +9,14 @@ export default function Index() {
   const router = useRouter();
 
 
-   useEffect(() => {
+  // store generated code in state so it's available to the button handler
+  const [code, setCode] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
     async function run() {
-      const code = await codeGenerate("placeholder");
-      console.log(code)
+      const generated = await codeGenerate("placeholder");
+      console.log(generated);
+      setCode(generated);
     }
     run();
   }, []);
@@ -25,7 +29,10 @@ export default function Index() {
       style={styles.greenButton}
       accessibilityRole="button"
       accessibilityLabel="Join as Host"
-      onPress={() => router.push('/host')}
+      onPress={() => {
+        if (!code) return;
+        router.push({ pathname: "/testhost", params: { code: code } });
+      }}
     >
       <Text style={styles.lightGreenText}> Join as Host </Text>
     </TouchableOpacity>

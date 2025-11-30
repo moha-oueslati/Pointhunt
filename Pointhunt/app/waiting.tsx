@@ -1,16 +1,38 @@
-import { Text, View, Button, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
-// import { onValue, ref } from "firebase/database";
-// import { db } from "../firebase"; 
+import { Text, View, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 export default function Waiting() {
-    const router = useRouter();
+  const router = useRouter();
+  const { code } = useLocalSearchParams<{ code?: string | string[] }>();
+  console.log("Waiting room code:", code);
+
+  const docId = code ? (Array.isArray(code) ? code[0] : code) : undefined;
+
+  useEffect(() => {
+    if (!docId) return;
+
+    const gameRef = doc(db, "codes", docId);
+
+    const unsubscribe = onSnapshot(gameRef, (snapshot) => {
+      const data = snapshot.data();
+      console.log("Snapshot data:", data);
+
+      if (data?.gameStarted === true) {
+        router.replace("/TaskInterface");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [docId, router]);
+
+
   return (
     <View style={styles.container}>
-      <View style={styles.row}>
-        <Text style={styles.text}>Waiting for host to start the game...</Text>
-<Button title="Secret Button" onPress={() => { router.push('/TaskInterface') }} />
-      </View>
+      <Text style={styles.text}>Waiting for host to start the game...</Text>
+
     </View>
   );
 }
@@ -18,14 +40,10 @@ export default function Waiting() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center", 
-    alignItems: "center", 
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
     backgroundColor: "#A8EFAB",
-  },
-  row: {
-    alignItems: "center",
-    gap: 10,
   },
   text: {
     fontSize: 20,
