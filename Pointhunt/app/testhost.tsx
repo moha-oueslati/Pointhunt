@@ -5,12 +5,12 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
 export default function TestHost() {
-    const { code } = useLocalSearchParams<{ code?: string | string[] }>();
-    const docId = code ? (Array.isArray(code) ? code[0] : code) : undefined;
+    const { code } = useLocalSearchParams<{ code?: string}>();
+    const docId = code;
 
     const handlePress = async () => {   
         if (!docId) {
-            Alert.alert('Missing code', 'No room code available — pass ?code=<roomId>');
+        Alert.alert('Ingen kod');
             return;
         }
 
@@ -19,15 +19,15 @@ export default function TestHost() {
             await updateDoc(roomRef, { gameStarted: true });
             
         } catch (err) {
-            console.error('Failed to start game:', err);
-            Alert.alert('Error', 'Failed to start game — see console for details');
+            console.error('Failed to start game', err);
+            Alert.alert('Kunde inte starta spelet, kolla firebase write rules');
         }
     };
 
     return (
         <View style={styles.container}>
             <Text style={{ marginBottom: 12 }}>{docId ? `Room: ${docId}` : 'No room code'}</Text>
-            <Button title="Start game" onPress={handlePress} />
+            <Button title="Starta spelet" onPress={handlePress} />
         </View>
     );
 }
