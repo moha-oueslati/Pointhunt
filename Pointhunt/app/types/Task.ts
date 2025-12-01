@@ -13,3 +13,13 @@ export interface TaskFormData {
   location: string;
   points: string;
 }
+
+
+export interface TaskSubmission {
+  id: string;
+  taskId: string;
+  teamId: string;
+  //Ingen aning hur data för videon ska vara
+  submittedAt: Date;
+  status: "pending" | "approved" | "declined";
+}
