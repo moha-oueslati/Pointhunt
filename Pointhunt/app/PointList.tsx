@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import PointInfo from "./PointInfo";
+import React from "react";
 import Navbar from "./navbar";
 
 // Guest
