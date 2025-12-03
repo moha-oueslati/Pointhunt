@@ -14,7 +14,6 @@ export interface TaskFormData {
   points: string;
 }
 
-
 export interface TaskSubmission {
   id: string;
   taskId: string;
