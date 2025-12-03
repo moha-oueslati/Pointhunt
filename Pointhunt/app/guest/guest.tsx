@@ -84,22 +84,4 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-    input: {
-    width: 225, // samma bredd som knappen
-    backgroundColor: "#fff",
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 15,
-    marginBottom: 20,
-    fontSize: 16,
-    textAlign: "center", // centrerar texten i mitten
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "#614417", //mörkbrunt
-    marginBottom: 40
-},
 });
