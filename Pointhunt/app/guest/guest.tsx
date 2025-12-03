@@ -20,7 +20,7 @@ export default function Guest() {
     if (snap.exists()) {
 
       router.push({
-  pathname: "/waiting",
+  pathname: "/guest/waiting",
   params: { code: code }
 });
 
