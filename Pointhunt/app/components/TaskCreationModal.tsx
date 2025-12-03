@@ -1,3 +1,4 @@
+// app/components/TaskCreationModal.tsx
 import React, { useState } from 'react';
 import {
   Modal,
@@ -7,13 +8,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
 } from 'react-native';
-import { TaskFormData } from '../types/Task';
 
-// vilka props den här komponenten tar emot
 interface TaskCreationModalProps {
   visible: boolean;
   onClose: () => void;
@@ -25,136 +21,103 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
   onClose,
   onSave,
 }) => {
-  const [formData, setFormData] = useState<TaskFormData>({
-    title: '',
-    summary: '',
-    location: '',
-    points: '',
-  });
+  const [title, setTitle] = useState('');
+  const [summary, setSummary] = useState('');
+  const [location, setLocation] = useState('');
+  const [points, setPoints] = useState('');
 
   const handleSave = () => {
     // kolla så att allt är ifyllt
-    if (!formData.title.trim()) {
+    if (!title.trim()) {
       Alert.alert('Oj då', 'Du måste skriva en titel');
       return;
     }
-    if (!formData.summary.trim()) {
+    if (!summary.trim()) {
       Alert.alert('Oj då', 'Du måste skriva en beskrivning');
       return;
     }
-    if (!formData.location.trim()) {
+    if (!location.trim()) {
       Alert.alert('Oj då', 'Du måste skriva en plats');
       return;
     }
-    const points = parseInt(formData.points);
-    if (!formData.points || points <= 0 || isNaN(points)) {
+    const pointsNum = parseInt(points);
+    if (!points || pointsNum <= 0 || isNaN(pointsNum)) {
       Alert.alert('Oj då', 'Du måste skriva hur många poäng uppgiften ger');
       return;
     }
 
-    // spara tasks
+    // spara uppgiften
     onSave({
-      title: formData.title.trim(),
-      summary: formData.summary.trim(),
-      location: formData.location.trim(),
-      points: points,
+      title: title.trim(),
+      summary: summary.trim(),
+      location: location.trim(),
+      points: pointsNum,
     });
 
     // rensa formuläret och stäng popup-fönstret
-    setFormData({
-      title: '',
-      summary: '',
-      location: '',
-      points: '',
-    });
+    setTitle('');
+    setSummary('');
+    setLocation('');
+    setPoints('');
     onClose();
   };
 
   const handleCancel = () => {
     // rensa allt och stäng utan att spara
-    setFormData({
-      title: '',
-      summary: '',
-      location: '',
-      points: '',
-    });
+    setTitle('');
+    setSummary('');
+    setLocation('');
+    setPoints('');
     onClose();
-  };
-
-  const updateField = (field: keyof TaskFormData, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value,
-    }));
   };
 
   return (
     <Modal
       visible={visible}
       animationType="slide"
-      presentationStyle="pageSheet"
       onRequestClose={handleCancel}
     >
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      >
+      <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Skapa ny uppgift</Text>
         </View>
 
-        <ScrollView style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Titel *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.title}
-              onChangeText={(value) => updateField('title', value)}
-              placeholder="Skriv titel på uppgiften"
-              placeholderTextColor="#999"
-              maxLength={100}
-            />
-          </View>
+        <View style={styles.form}>
+          <Text style={styles.label}>Titel *</Text>
+          <TextInput
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+            placeholder="Skriv titel på uppgiften"
+          />
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Beskrivning *</Text>
-            <TextInput
-              style={[styles.input, styles.textArea]}
-              value={formData.summary}
-              onChangeText={(value) => updateField('summary', value)}
-              placeholder="Beskriv vad man ska göra"
-              placeholderTextColor="#999"
-              multiline
-              numberOfLines={4}
-              maxLength={500}
-            />
-          </View>
+          <Text style={styles.label}>Beskrivning *</Text>
+          <TextInput
+            style={[styles.input, styles.textArea]}
+            value={summary}
+            onChangeText={setSummary}
+            placeholder="Beskriv vad man ska göra"
+            multiline
+            numberOfLines={4}
+          />
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Plats *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.location}
-              onChangeText={(value) => updateField('location', value)}
-              placeholder="Var ska man göra uppgiften?"
-              placeholderTextColor="#999"
-              maxLength={100}
-            />
-          </View>
+          <Text style={styles.label}>Plats *</Text>
+          <TextInput
+            style={styles.input}
+            value={location}
+            onChangeText={setLocation}
+            placeholder="Var ska man göra uppgiften?"
+          />
 
-          <View style={styles.inputGroup}>
-            <Text style={styles.label}>Poäng *</Text>
-            <TextInput
-              style={styles.input}
-              value={formData.points}
-              onChangeText={(value) => updateField('points', value)}
-              placeholder="Hur många poäng ger uppgiften?"
-              placeholderTextColor="#999"
-              keyboardType="number-pad"
-              maxLength={4}
-            />
-          </View>
-        </ScrollView>
+          <Text style={styles.label}>Poäng *</Text>
+          <TextInput
+            style={styles.input}
+            value={points}
+            onChangeText={setPoints}
+            placeholder="Hur många poäng ger uppgiften?"
+            keyboardType="number-pad"
+          />
+        </View>
 
         <View style={styles.footer}>
           <TouchableOpacity
@@ -170,7 +133,7 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
             <Text style={styles.saveButtonText}>Spara uppgift</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     </Modal>
   );
 };
@@ -179,12 +142,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+    paddingTop: 50,
   },
   header: {
     padding: 20,
+    backgroundColor: 'white',
     borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
-    backgroundColor: 'white',
   },
   title: {
     fontSize: 20,
@@ -195,9 +159,6 @@ const styles = StyleSheet.create({
   form: {
     flex: 1,
     padding: 20,
-  },
-  inputGroup: {
-    marginBottom: 20,
   },
   label: {
     fontSize: 16,
@@ -213,6 +174,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     fontSize: 16,
     color: '#333',
+    marginBottom: 20,
   },
   textArea: {
     height: 100,
@@ -221,22 +183,19 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     padding: 20,
+    backgroundColor: 'white',
     borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
-    backgroundColor: 'white',
-    gap: 12,
   },
   button: {
     flex: 1,
     padding: 16,
     borderRadius: 8,
     alignItems: 'center',
-    justifyContent: 'center',
+    marginHorizontal: 5,
   },
   cancelButton: {
     backgroundColor: '#f0f0f0',
-    borderWidth: 1,
-    borderColor: '#ddd',
   },
   saveButton: {
     backgroundColor: '#007AFF',
