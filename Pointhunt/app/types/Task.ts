@@ -1,4 +1,5 @@
-export interface Task { // HOST
+// app/types/Task.ts
+export interface Task {
   id: string;
   title: string;
   summary: string;
