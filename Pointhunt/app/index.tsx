@@ -1,36 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { codeGenerate } from "./firebase/codeGenerator";
+
 
 export default function Index() {
   const router = useRouter();
 
+
+  // store generated code in state so it's available to the button handler
+  const [code, setCode] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    async function run() {
+      const generated = await codeGenerate("placeholder");
+      console.log(generated);
+      setCode(generated);
+    }
+    run();
+  }, []);
+
   return (
     <View style={styles.container}>    
-    <Text style={styles.title}> Welcome to Pointhunt! </Text>
+      <Text style={styles.title}> Welcome to Pointhunt! </Text>
 
-    <TouchableOpacity style={styles.redButton}
-    accessibilityRole="button"
-    accessibilityLabel="Join as Host"
-    onPress={() => console.log('Join as Host pressed')}
+    <TouchableOpacity
+      style={styles.redButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Host"
+      onPress={() => {
+        if (!code) return;
+        router.push({ pathname: "/testhost", params: { code: code } });
+      }}
     >
-    <Text style={styles.lightRedText}> Join as Host </Text>
+      <Text style={styles.lightRedText}> Join as Host </Text>
     </TouchableOpacity>
         
-    <TouchableOpacity style={styles.yellowButton}
-     accessibilityRole="button"
-     accessibilityLabel="Join as Guest"
-     onPress={() => router.push('/guest')} 
-
+    <TouchableOpacity
+      style={styles.yellowButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Guest"
+      onPress={() => router.push('/guest')}
     >
       <Text style={styles.lightYellowText}> Join as Guest </Text>
     </TouchableOpacity>
     </View>
-  ); 
-}
+    );
+  }
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
