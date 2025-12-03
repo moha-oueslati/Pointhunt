@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { TaskSubmission } from "../types/Task";
+import VideoSpelare from "../VideoSpelare";
 
 export default function HostReviewScreen() {
   //Hårdkodad submission
@@ -16,7 +17,7 @@ export default function HostReviewScreen() {
       id: "1",
       taskId: "101",
       teamId: "guestA",
-      //Videodata här nånstans
+      //Videodata här nånstans?? Kanske
       submittedAt: new Date(),
       status: "pending",
     },
@@ -39,6 +40,13 @@ export default function HostReviewScreen() {
       <Text style={styles.date}>
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
+
+      {/*Videospelaren*/}
+      <VideoSpelare
+        path={require("../../assets/julhalsning_final.mp4")}
+        h={360}
+        w={640}
+      />
 
       {/* Status Buttons */}
       <View style={styles.buttonRow}>
