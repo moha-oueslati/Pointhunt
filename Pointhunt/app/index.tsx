@@ -40,7 +40,7 @@ export default function Index() {
       style={styles.yellowButton}
       accessibilityRole="button"
       accessibilityLabel="Join as Guest"
-      onPress={() => router.push('/guest/guest')}
+      onPress={() => router.push('/guest' as any)}
     >
       <Text style={styles.lightYellowText}> Join as Guest </Text>
     </TouchableOpacity>

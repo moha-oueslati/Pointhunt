@@ -27,7 +27,7 @@ export default function AllTasks() {
           
           <TouchableOpacity 
             style={styles.backButton}
-            onPress={() => router.push('/host')}
+            onPress={() => router.push('/host' as any)}
           >
             <Text style={styles.backButtonText}>Tillbaka till hem</Text>
           </TouchableOpacity>
@@ -38,14 +38,14 @@ export default function AllTasks() {
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host')}
+          onPress={() => router.push('/host' as any)}
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.navButton, styles.activeNavButton]}
-          onPress={() => router.push('/tasks')}
+          onPress={() => router.push('/tasks' as any)}
         >
           <Text style={[styles.navButtonText, styles.activeNavButtonText]}>
             Uppgifter
@@ -54,7 +54,7 @@ export default function AllTasks() {
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/settings')}
+          onPress={() => router.push('/settings' as any)}
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>

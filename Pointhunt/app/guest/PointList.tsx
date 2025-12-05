@@ -1,11 +1,11 @@
+import React from "react";
 import { Text, View } from "react-native";
 import PointInfo from "./PointInfo";
-import React from "react";
 import Navbar from "./navbar";
 
 // Guest
 export default function PointList() {
-  const PointList = [
+  const points = [
     {
       mission: "Stå på händerna i 10 sekunder",
       points: 10,
@@ -40,11 +40,11 @@ export default function PointList() {
         }}
       >
         <Text>Welcome to Pointhunt!</Text>
-        <span>
-          <Text>Lag: 1 </Text>
-          <Text> 10 poäng</Text>
-        </span>
-        {PointList.map((obj, index) => (
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 250, marginVertical: 8 }}>
+          <Text>Lag: 1</Text>
+          <Text>10 poäng</Text>
+        </View>
+        {points.map((obj, index) => (
           <PointInfo key={index} data={obj} ndex={index + 1} />
         ))}
       </View>

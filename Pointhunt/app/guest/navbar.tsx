@@ -50,7 +50,7 @@ export default function Navbar() {
       >
         {" "}
         {/*Denna knapp kanske behöver en bild*/}
-        <TouchableOpacity onPress={() => router.push("/TaskInterface")}>
+        <TouchableOpacity onPress={() => router.push('/TaskInterface' as any)}>
           <Text>Ladda upp</Text>
         </TouchableOpacity>
       </View>
@@ -64,7 +64,7 @@ export default function Navbar() {
       >
         {" "}
         {/*Denna knapp kanske behöver en bild*/}
-        <TouchableOpacity onPress={() => router.push("/PointList")}>
+        <TouchableOpacity onPress={() => router.push('/PointList' as any)}>
           <Text>Lista</Text>
         </TouchableOpacity>
       </View>
@@ -78,7 +78,7 @@ export default function Navbar() {
       >
         {" "}
         {/*Denna knapp kanske behöver en bild*/}
-        <TouchableOpacity onPress={() => router.push("/Profil")}>
+        <TouchableOpacity onPress={() => router.push('/Profil' as any)}>
           <Text>Profil</Text>
         </TouchableOpacity>
       </View>

@@ -1,16 +1,42 @@
 import React from "react";
-import {Text} from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 // Guest
-export default function PointInfo({ data, ndex}:{
-  data: { mission: string; points: number };
-  ndex: number;
-}){
-    return(
-        <div>
-            <input type="checkbox" name="checker"/>
-            <span><Text>{ndex}</Text><Text> {data.mission} <input type="checkbox" name="star" /></Text></span>
-            <Text>{data.points} Poäng</Text>
-        </div>
+export default function PointInfo({ data, ndex }: {
+    data: { mission: string; points: number };
+    ndex: number;
+}) {
+    return (
+        <View style={styles.container}>
+            <View style={styles.row}>
+                <Text style={styles.index}>{ndex}.</Text>
+                <Text style={styles.mission}>{data.mission}</Text>
+            </View>
+            <Text style={styles.points}>{data.points} Poäng</Text>
+        </View>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    index: {
+        fontWeight: '700',
+        width: 24,
+    },
+    mission: {
+        flex: 1,
+    },
+    points: {
+        marginTop: 6,
+        color: '#666',
+    },
+});

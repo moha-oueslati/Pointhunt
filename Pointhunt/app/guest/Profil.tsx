@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, Image } from "react-native";
 import Navbar from "./navbar";
-import VideoSpelare from "./VideoSpelare";
+import VideoSpelare from "../VideoSpelare";
 
 export default function Profil() {
   return (

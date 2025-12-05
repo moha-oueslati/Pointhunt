@@ -9,9 +9,6 @@ import {
 } from "react-native";
 import { TaskSubmission } from "../types/Task";
 import VideoSpelare from "../VideoSpelare";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "../firebaseConfig";
-import { useEffect, useState } from "react";
 
 
 export default function HostReviewScreen() {
@@ -21,7 +18,7 @@ export default function HostReviewScreen() {
       id: "1",
       taskId: "101",
       teamId: "guestA",
-      videoUrl: "https://firebasestorage.googleapis.com/....", 
+      videoRef: "https://firebasestorage.googleapis.com/....",
       submittedAt: new Date(),
       status: "pending",
     },
@@ -46,11 +43,7 @@ export default function HostReviewScreen() {
       </Text>
 
       {/* Firebase video */}
-      <VideoSpelare
-        path={{ uri: item.videoUrl }}
-        h={360}
-        w={640}
-      />
+      <VideoSpelare path={item.videoRef} h={360} w={640} />
 
       {/* Status Buttons */}
       <View style={styles.buttonRow}>

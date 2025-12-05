@@ -57,21 +57,21 @@ export default function Settings() {
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host')}
+          onPress={() => router.push('/host' as any)}
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/tasks')}
+          onPress={() => router.push('/tasks' as any)}
         >
           <Text style={styles.navButtonText}>Uppgifter</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.navButton, styles.activeNavButton]}
-          onPress={() => router.push('/settings')}
+          onPress={() => router.push('/settings' as any)}
         >
           <Text style={[styles.navButtonText, styles.activeNavButtonText]}>
             Inställningar

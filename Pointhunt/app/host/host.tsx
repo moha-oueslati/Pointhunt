@@ -8,8 +8,8 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import TaskCreationModal from './components/TaskCreationModal';
-import { Task } from './types/Task';
+import TaskCreationModal from '../components/TaskCreationModal';
+import { Task } from '../types/Task';
 import { useRouter } from 'expo-router';
 
 export default function Host() {
@@ -82,7 +82,7 @@ export default function Host() {
             <View style={styles.emptyState}>
               <Text style={styles.emptyText}>Inga uppgifter än</Text>
               <Text style={styles.emptySubtext}>
-                Tryck på "Skapa ny uppgift" för att börja
+                Tryck på Skapa ny uppgift för att börja
               </Text>
             </View>
           )}
@@ -93,21 +93,21 @@ export default function Host() {
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host')}
+          onPress={() => router.push('/host' as any)}
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/tasks')}
+          onPress={() => router.push('/tasks' as any)}
         >
           <Text style={styles.navButtonText}>Uppgifter</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/settings')}
+          onPress={() => router.push('/settings' as any)}
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
