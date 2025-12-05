@@ -25,7 +25,7 @@ export default function Index() {
       <Text style={styles.title}> Welcome to Pointhunt! </Text>
 
     <TouchableOpacity
-      style={styles.redButton}
+      style={styles.purpleButton}
       accessibilityRole="button"
       accessibilityLabel="Join as Host"
       onPress={() => {
@@ -33,7 +33,7 @@ export default function Index() {
         router.push({ pathname: "/host/testhost", params: { code: code } });
       }}
     >
-      <Text style={styles.lightRedText}> Join as Host </Text>
+      <Text style={styles.lightYellowText}> Join as Host </Text>
     </TouchableOpacity>
         
     <TouchableOpacity
@@ -42,7 +42,7 @@ export default function Index() {
       accessibilityLabel="Join as Guest"
       onPress={() => router.push('/guest' as any)}
     >
-      <Text style={styles.lightYellowText}> Join as Guest </Text>
+      <Text style={styles.lightPurpleText}> Join as Guest </Text>
     </TouchableOpacity>
     </View>
     );
@@ -53,16 +53,16 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#151B7C" //Mörkblått till bakgrunden
+    backgroundColor: "#AEDDFF" //Mörkblått till bakgrunden
 },
 title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#CCB307", //Gult
+    color: "#7179FF", //Gult
     marginBottom: 40
 },
-redButton: {
-    backgroundColor: '#8C070C', //mörkrött
+purpleButton: {
+    backgroundColor: '#B89DFF', //lila
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
@@ -70,18 +70,18 @@ redButton: {
     alignItems: "center",
 },
 yellowButton: {
-    backgroundColor: '#CCB307', //gult
+    backgroundColor: '#FFDE7D', //gult
     paddingVertical: 14,
     borderRadius: 10,
     width: 225,
     alignItems: "center",
 },
-lightRedText: {
-  color: '#FFAEB1', //rosa
+lightYellowText: {
+  color: '#FFDE7D', //ljusgult
   fontSize: 18,
 },
-lightYellowText: {
-  color: '#FFF8C7', //ljusgult
+lightPurpleText: {
+  color: '#B89DFF', //lila
   fontSize: 18,
 },
 redText: {
@@ -99,15 +99,7 @@ codeTextfield: { // Till när man lägger in kod
   width: 225,
   alignItems: "center",
 },
-writeTextfield: { // För hostsidan när man skriver in titel/namn på host
-  paddingVertical: 8,
-  backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
-  borderRadius: 8,
-  borderWidth: 2,
-  borderColor: '#CCB307', //gul ram
-  marginBottom: 20,
-  width: 225,
-}
+
 });
 
 

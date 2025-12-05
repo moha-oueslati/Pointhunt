@@ -10,6 +10,7 @@ export default function Waiting() {
   console.log("Waiting room code:", code);
 
   const docId = code ? (Array.isArray(code) ? code[0] : code) : undefined;
+  const [dots, setDots] = React.useState(".");
 
   useEffect(() => {
     if (!docId) return;
@@ -28,11 +29,21 @@ export default function Waiting() {
     return () => unsubscribe();
   }, [docId, router]);
 
+  // punkterna rör på sig
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDots((prev) => {
+        if (prev === "...") return ".";
+        else return prev + ".";
+      });
+    }, 500);
+  
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Waiting for host to start the game...</Text>
-
+      <Text style={styles.text}>Waiting for host to start the game{dots}</Text>
     </View>
   );
 }
@@ -43,10 +54,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#A8EFAB",
+    backgroundColor: "#AEDDFF",
   },
   text: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: "center",
+    color: "#B89DFF",
+    fontWeight: "bold",
   },
 });
