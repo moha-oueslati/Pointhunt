@@ -21,18 +21,17 @@ export default function Waiting() {
       console.log("Snapshot data:", data);
 
       if (data?.gameStarted === true) {
-        router.replace("/TaskInterface");
+        router.replace("/Hem");
+        n;
       }
     });
 
     return () => unsubscribe();
   }, [docId, router]);
 
-
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Waiting for host to start the game...</Text>
-
     </View>
   );
 }
