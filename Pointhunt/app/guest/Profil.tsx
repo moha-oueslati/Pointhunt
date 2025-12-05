@@ -32,13 +32,18 @@ export default function Profil() {
            inte speciellt najs men vet typ inte hur det ska fixas */,
           }}
         >
-          {/*Flöde av lagets alla videoklipp*/}
-          <Text style={{ fontSize: 25, fontWeight: "bold" }}>Klipp:</Text>
-          <VideoSpelare
-            path={require("../assets/julhalsning_final.mp4")}
-            h={180}
-            w={320}
-          />
+            
+     {/* 
+  Flöde av lagets alla videoklipp
+  <Text style={{ fontSize: 25, fontWeight: "bold" }}>Klipp:</Text>
+  <VideoSpelare
+    path={require("../assets/julhalsning_final.mp4")}
+    h={180}
+    w={320}
+  />
+*/}
+
+            
         </View>
       </View>
       <Navbar />
