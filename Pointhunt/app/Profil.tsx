@@ -1,17 +1,18 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, ScrollView } from "react-native";
 import Navbar from "./navbar";
 import VideoSpelare from "./VideoSpelare";
 
 export default function Profil() {
   return (
     <>
-      <View
-        style={{
+      <ScrollView
+        contentContainerStyle={{
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
+        showsVerticalScrollIndicator={false}
       >
         <View style={{ flex: 1 }}>
           {/*Lag namns text (större text)*/}
@@ -40,8 +41,10 @@ export default function Profil() {
             w={320}
           />
         </View>
+      </ScrollView>
+      <View style={{ position: "absolute", bottom: 0, width: "100%" }}>
+        <Navbar />
       </View>
-      <Navbar />
     </>
   );
 }
