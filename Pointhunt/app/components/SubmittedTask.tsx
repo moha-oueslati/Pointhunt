@@ -43,7 +43,7 @@ export default function HostReviewScreen() {
 
       {/*Videospelaren*/}
       <VideoSpelare
-        path={require("../../assets/julhalsning_final.mp4")}
+        path={"placeholder"}//{require("../../assets/julhalsning_final.mp4")}
         h={360}
         w={640}
       />
