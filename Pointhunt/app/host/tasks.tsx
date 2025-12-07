@@ -1,54 +1,35 @@
-// app/settings.tsx
-import React, { useState } from 'react';
+// app/tasks.tsx
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
-  Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
-export default function Settings() {
+export default function AllTasks() {
   const router = useRouter();
-  const [huntName, setHuntName] = useState('Mitt Pointhunt');
-  const [hostName, setHostName] = useState('Värdens namn');
-
-  const saveSettings = () => {
-    Alert.alert('Sparat!', 'Dina inställningar är nu sparade.');
-  };
 
   return (
     <View style={styles.container}>
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.title}>Inställningar</Text>
-          <Text style={styles.subtitle}>Hantera din pointhunt</Text>
+          <Text style={styles.title}>Alla uppgifter</Text>
+          <Text style={styles.subtitle}>Här kommer alla uppgifter visas</Text>
         </View>
 
-        <View style={styles.settingsForm}>
-          <Text style={styles.label}>Pointhunt namn</Text>
-          <TextInput
-            style={styles.input}
-            value={huntName}
-            onChangeText={setHuntName}
-            placeholder="Namn på ditt pointhunt"
-          />
-
-          <Text style={styles.label}>Ditt namn som värd/host</Text>
-          <TextInput
-            style={styles.input}
-            value={hostName}
-            onChangeText={setHostName}
-            placeholder="Ditt namn"
-          />
-
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyText}>Inga uppgifter här än</Text>
+          <Text style={styles.emptySubtext}>
+            Gå tillbaka till hemsidan för att skapa uppgifter
+          </Text>
+          
           <TouchableOpacity 
-            style={styles.saveButton}
-            onPress={saveSettings}
+            style={styles.backButton}
+            onPress={() => router.push('/host' as any)}
           >
-            <Text style={styles.saveButtonText}>Spara inställningar</Text>
+            <Text style={styles.backButtonText}>Tillbaka till hem</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -63,19 +44,19 @@ export default function Settings() {
         </TouchableOpacity>
         
         <TouchableOpacity 
-          style={styles.navButton}
+          style={[styles.navButton, styles.activeNavButton]}
           onPress={() => router.push('/tasks' as any)}
         >
-          <Text style={styles.navButtonText}>Uppgifter</Text>
+          <Text style={[styles.navButtonText, styles.activeNavButtonText]}>
+            Uppgifter
+          </Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
-          style={[styles.navButton, styles.activeNavButton]}
+          style={styles.navButton}
           onPress={() => router.push('/settings' as any)}
         >
-          <Text style={[styles.navButtonText, styles.activeNavButtonText]}>
-            Inställningar
-          </Text>
+          <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -107,36 +88,33 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#666',
   },
-  settingsForm: {
-    padding: 20,
-    backgroundColor: 'white',
-    marginHorizontal: 20,
-    borderRadius: 8,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: '#333',
-  },
-  input: {
-    backgroundColor: '#f8f9fa',
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 20,
-  },
-  saveButton: {
-    backgroundColor: '#007AFF',
-    padding: 16,
-    borderRadius: 8,
+  emptyState: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 10,
+    padding: 20,
   },
-  saveButtonText: {
+  emptyText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#666',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 16,
+    color: '#999',
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  backButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+  },
+  backButtonText: {
     color: 'white',
     fontSize: 16,
     fontWeight: '600',

@@ -2,14 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 // Guest
-export default function PointInfo({ data, index }: {
+export default function PointInfo({ data, ndex }: {
     data: { mission: string; points: number };
     ndex: number;
 }) {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <Text style={styles.index}>{index}.</Text>
+                <Text style={styles.index}>{ndex}.</Text>
                 <Text style={styles.mission}>{data.mission}</Text>
             </View>
             <Text style={styles.points}>{data.points} Poäng</Text>

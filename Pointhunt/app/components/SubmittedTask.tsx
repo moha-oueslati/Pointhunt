@@ -10,14 +10,15 @@ import {
 import { TaskSubmission } from "../types/Task";
 import VideoSpelare from "../VideoSpelare";
 
+
 export default function HostReviewScreen() {
-  //Hårdkodad submission
+
   const [submissions, setSubmissions] = useState<TaskSubmission[]>([
     {
       id: "1",
       taskId: "101",
       teamId: "guestA",
-      //Videodata här nånstans?? Kanske
+      videoRef: "https://firebasestorage.googleapis.com/....",
       submittedAt: new Date(),
       status: "pending",
     },
@@ -41,12 +42,8 @@ export default function HostReviewScreen() {
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
 
-      {/*Videospelaren*/}
-      <VideoSpelare
-        path={"placeholder"}//{require("../../assets/julhalsning_final.mp4")}
-        h={360}
-        w={640}
-      />
+      {/* Firebase video */}
+      <VideoSpelare path={item.videoRef} h={360} w={640} />
 
       {/* Status Buttons */}
       <View style={styles.buttonRow}>
@@ -79,7 +76,9 @@ export default function HostReviewScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Inskickade Uppgifter ({submissions.length})</Text>
+      <Text style={styles.header}>
+        Inskickade Uppgifter ({submissions.length})
+      </Text>
 
       <FlatList
         data={submissions}
@@ -94,28 +93,28 @@ export default function HostReviewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f5f5f5",
   },
 
   header: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    backgroundColor: 'white',
+    borderBottomColor: "#e0e0e0",
+    backgroundColor: "white",
     fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333',
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#333",
   },
 
   card: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#e0e0e0',
+    borderColor: "#e0e0e0",
     marginBottom: 20,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.05,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
@@ -123,53 +122,26 @@ const styles = StyleSheet.create({
 
   title: {
     fontSize: 18,
-    fontWeight: '700',
-    color: '#333',
+    fontWeight: "700",
+    color: "#333",
     marginBottom: 6,
   },
 
   subtitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 6,
-    color: '#555',
+    color: "#555",
   },
 
   date: {
     fontSize: 14,
-    color: '#777',
+    color: "#777",
     marginBottom: 10,
   },
 
-  video: {
-    width: '100%',
-    height: 220,
-    backgroundColor: '#000',
-    borderRadius: 10,
-    marginVertical: 14,
-  },
-
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 6,
-    color: '#333',
-  },
-
-  commentInput: {
-    backgroundColor: 'white',
-    padding: 12,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    fontSize: 16,
-    color: '#333',
-    height: 90,
-    textAlignVertical: 'top',
-  },
-
   buttonRow: {
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 12,
     marginTop: 16,
   },
@@ -178,37 +150,29 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   acceptButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: "#007AFF",
   },
 
   declineButton: {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: "#ddd",
   },
 
   buttonText: {
     fontSize: 16,
-    fontWeight: '600',
-  },
-
-  acceptButtonText: {
-    color: 'white',
-  },
-
-  declineButtonText: {
-    color: '#555',
+    fontWeight: "600",
   },
 
   status: {
     marginTop: 14,
     fontSize: 16,
-    fontWeight: '600',
-    color: '#444',
+    fontWeight: "600",
+    color: "#444",
   },
 });

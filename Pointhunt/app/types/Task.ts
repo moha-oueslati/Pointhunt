@@ -19,7 +19,7 @@ export interface TaskSubmission {
   id: string;
   taskId: string;
   teamId: string;
-  //Ingen aning hur data för videon ska vara
+videoRef: string;
   submittedAt: Date;
   status: "pending" | "approved" | "declined";
 }
