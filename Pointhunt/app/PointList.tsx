@@ -1,6 +1,7 @@
 import { Text, View, StyleSheet, FlatList } from "react-native";
 import PointInfo from "./guest/PointInfo";
 import React from "react";
+import Navbar from "./components/navbar";
 
 export default function PointList() {
   const PointList = [
@@ -16,6 +17,7 @@ export default function PointList() {
   // Text inputen är en placeholder tills vi har en hårdkodad lista som vi kan skicka in i en funktion för "PointInfo.tsx"
 
   return (
+    <>
     <View style={styles.container}>
       <View style={styles.frame}>
 
@@ -28,12 +30,14 @@ export default function PointList() {
           data={PointList}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
-            <PointInfo data={item} index={index + 1} />
+            <PointInfo data={item} ndex={index + 1} />
           )}
           contentContainerStyle={styles.listSpacing}
         />
       </View>
     </View>
+    <Navbar/>
+    </>
   );
 }
 

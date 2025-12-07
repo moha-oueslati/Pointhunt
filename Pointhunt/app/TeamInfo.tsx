@@ -1,7 +1,6 @@
-//GUEST (kanske också host?)
-
 import React from 'react';
 import { View } from "react-native";
+import Navbar from './components/navbar';
 
 //Displayar teams och dess info (för tillfället bara namn och poäng, ska något mer läggas till?)
 export default function DisplayTeam(/*team: {name: string, points: number}*/) { 
@@ -11,9 +10,12 @@ export default function DisplayTeam(/*team: {name: string, points: number}*/) {
 }   
     //Hårdkodat
     return(
+        <>
         <View>
             <h2>{team.name}</h2>
             <p>Total points: {team.points}</p>
         </View>
+        <Navbar/>
+        </>
     );
 }
