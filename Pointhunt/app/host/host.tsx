@@ -1,5 +1,5 @@
-// app/host.tsx
-import React, { useState } from 'react';
+// app/host/host.tsx
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,26 +7,59 @@ import {
   StyleSheet,
   FlatList,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import TaskCreationModal from '../components/TaskCreationModal';
-import { Task } from '../types/Task';
-import { useRouter } from 'expo-router';
+import { Task } from '../host/tasks';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { saveTaskToFirebase, getTasksByJoinCode } from '../firebase/taskService';
 
 export default function Host() {
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [joinCode] = useState('ABCD');
-
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
-    const newTask: Task = {
-      ...taskData,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-    };
-
-    setTasks(prev => [newTask, ...prev]);
-    Alert.alert('Klart!', 'Uppgiften är skapad!');
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Get join code from params or use default
+  const joinCode = params.code ? String(params.code) : 'ABCD';
+  
+  // Load tasks from Firebase when component mounts or joinCode changes
+  useEffect(() => {
+    loadTasks();
+  }, [joinCode]);
+  
+  const loadTasks = async () => {
+    setIsLoading(true);
+    try {
+      const firebaseTasks = await getTasksByJoinCode(joinCode);
+      setTasks(firebaseTasks);
+    } catch (error) {
+      Alert.alert('Fel', 'Kunde inte ladda uppgifter från servern');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleSaveTask = async (taskData: Omit<Task, 'id' | 'createdAt'>) => {
+    try {
+      // Save to Firebase
+      const taskId = await saveTaskToFirebase(taskData, joinCode);
+      
+      // Update local state
+      const newTask: Task = {
+        ...taskData,
+        id: taskId,
+        createdAt: new Date(),
+      };
+      
+      setTasks(prev => [newTask, ...prev]);
+      Alert.alert('Klart!', 'Uppgiften är sparad i databasen!');
+    } catch (error) {
+      Alert.alert('Fel', 'Kunde inte spara uppgiften. Försök igen.');
+      console.error(error);
+    }
   };
 
   const openCreateTaskModal = () => {
@@ -56,6 +89,7 @@ export default function Host() {
         <View style={styles.header}>
           <Text style={styles.title}>Värdens/hostens dashboard</Text>
           <Text style={styles.subtitle}>Anslutningskod: {joinCode}</Text>
+          <Text style={styles.codeInfo}>Dela denna kod med dina gäster!</Text>
         </View>
 
         {/* knapp för att skapa uppgift */}
@@ -68,15 +102,27 @@ export default function Host() {
 
         {/* lista med uppgifter */}
         <View style={styles.tasksContainer}>
-          <Text style={styles.sectionTitle}>Uppgifter ({tasks.length})</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Uppgifter ({tasks.length})</Text>
+            <TouchableOpacity onPress={loadTasks} style={styles.refreshButton}>
+              <Text style={styles.refreshText}>Uppdatera</Text>
+            </TouchableOpacity>
+          </View>
           
-          {tasks.length > 0 ? (
+          {isLoading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#007AFF" />
+              <Text style={styles.loadingText}>Laddar uppgifter...</Text>
+            </View>
+          ) : tasks.length > 0 ? (
             <FlatList
               data={tasks}
               renderItem={renderTaskItem}
               keyExtractor={(item) => item.id}
               contentContainerStyle={styles.tasksList}
               showsVerticalScrollIndicator={false}
+              refreshing={isLoading}
+              onRefresh={loadTasks}
             />
           ) : (
             <View style={styles.emptyState}>
@@ -93,21 +139,21 @@ export default function Host() {
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host' as any)}
+          onPress={() => router.push(`/host/host?code=${joinCode}`)}
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/tasks' as any)}
+          onPress={() => router.push(`/host/tasks?code=${joinCode}`)}
         >
           <Text style={styles.navButtonText}>Uppgifter</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/settings' as any)}
+          onPress={() => router.push(`/host/settings?code=${joinCode}`)}
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
@@ -131,7 +177,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: 50,
-    paddingBottom: 60, // så att navigation bar syns
+    paddingBottom: 60,
   },
   header: {
     padding: 20,
@@ -145,8 +191,15 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
+    color: '#007AFF',
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  codeInfo: {
+    fontSize: 14,
     color: '#666',
+    fontStyle: 'italic',
   },
   createButton: {
     backgroundColor: '#007AFF',
@@ -165,11 +218,26 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 16,
+  },
+  refreshButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 6,
+  },
+  refreshText: {
+    color: '#007AFF',
+    fontSize: 14,
   },
   tasksList: {
     gap: 12,
@@ -206,6 +274,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FF9500',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#666',
   },
   emptyState: {
     paddingVertical: 40,

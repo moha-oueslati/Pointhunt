@@ -1,20 +1,17 @@
+// app/index.tsx
 import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { codeGenerate } from "./firebase/codeGenerator";
-
+import { codeGenerate } from "../app/firebase/codeGenerator";
 
 export default function Index() {
   const router = useRouter();
-
-
-  // store generated code in state so it's available to the button handler
   const [code, setCode] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     async function run() {
-      const generated = await codeGenerate("placeholder");
-      console.log(generated);
+      const generated = await codeGenerate("host-session");
+      console.log("Generated code:", generated);
       setCode(generated);
     }
     run();
@@ -22,86 +19,70 @@ export default function Index() {
 
   return (
     <View style={styles.container}>    
-      <Text style={styles.title}> Welcome to Pointhunt! </Text>
+      <Text style={styles.title}>Welcome to Pointhunt!</Text>
 
-    <TouchableOpacity
-      style={styles.purpleButton}
-      accessibilityRole="button"
-      accessibilityLabel="Join as Host"
-      onPress={() => {
-        if (!code) return;
-        router.push({ pathname: "/host/testhost", params: { code: code } });
-      }}
-    >
-      <Text style={styles.lightYellowText}> Join as Host </Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.purpleButton}
+        accessibilityRole="button"
+        accessibilityLabel="Join as Host"
+        onPress={() => {
+          if (!code) {
+            alert("Generating code, please wait...");
+            return;
+          }
+          // Navigate to /host/host with the generated code
+          router.push(`/host/host?code=${code}`);
+        }}
+      >
+        <Text style={styles.lightYellowText}>Join as Host</Text>
+      </TouchableOpacity>
         
-    <TouchableOpacity
-      style={styles.yellowButton}
-      accessibilityRole="button"
-      accessibilityLabel="Join as Guest"
-      onPress={() => router.push('/guest' as any)}
-    >
-      <Text style={styles.lightPurpleText}> Join as Guest </Text>
-    </TouchableOpacity>
-    {/* <PointInfo data={{mission: "Exempeluppgift", points: 10}} ndex={1} /> */}
+      <TouchableOpacity
+        style={styles.yellowButton}
+        accessibilityRole="button"
+        accessibilityLabel="Join as Guest"
+        onPress={() => router.push('/guest')}
+      >
+        <Text style={styles.lightPurpleText}>Join as Guest</Text>
+      </TouchableOpacity>
     </View>
-    );
-  }
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#AEDDFF" //Mörkblått till bakgrunden
-},
-title: {
+    backgroundColor: "#AEDDFF"
+  },
+  title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#7179FF", //Gult
+    color: "#7179FF",
     marginBottom: 40
-},
-purpleButton: {
-    backgroundColor: '#B89DFF', //lila
+  },
+  purpleButton: {
+    backgroundColor: '#B89DFF',
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
     width: 225,
     alignItems: "center",
-},
-yellowButton: {
-    backgroundColor: '#FFDE7D', //gult
+  },
+  yellowButton: {
+    backgroundColor: '#FFDE7D',
     paddingVertical: 14,
     borderRadius: 10,
     width: 225,
     alignItems: "center",
-},
-lightYellowText: {
-  color: '#FFDE7D', //ljusgult
-  fontSize: 18,
-},
-lightPurpleText: {
-  color: '#B89DFF', //lila
-  fontSize: 18,
-},
-redText: {
-  color: '#8C070C', //mörkrött
-  fontSize: 18,
-},
-yellowText: {
-  color: '#CCB307', //gult
-  fontSize: 18,
-},
-codeTextfield: { // Till när man lägger in kod
-  paddingVertical: 14,
-  backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
-  borderRadius: 10,
-  width: 225,
-  alignItems: "center",
-},
-
+  },
+  lightYellowText: {
+    color: '#FFDE7D',
+    fontSize: 18,
+  },
+  lightPurpleText: {
+    color: '#B89DFF',
+    fontSize: 18,
+  },
 });
-
-
-
