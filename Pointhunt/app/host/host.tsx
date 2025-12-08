@@ -21,10 +21,10 @@ export default function Host() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   
-  // Get join code from params or use default
+
   const joinCode = params.code ? String(params.code) : 'ABCD';
   
-  // Load tasks from Firebase when component mounts or joinCode changes
+
   useEffect(() => {
     loadTasks();
   }, [joinCode]);
@@ -44,10 +44,8 @@ export default function Host() {
   
   const handleSaveTask = async (taskData: Omit<Task, 'id' | 'createdAt'>) => {
     try {
-      // Save to Firebase
       const taskId = await saveTaskToFirebase(taskData, joinCode);
       
-      // Update local state
       const newTask: Task = {
         ...taskData,
         id: taskId,
