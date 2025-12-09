@@ -21,32 +21,32 @@ export default function Index() {
   }, []);
 
   return (
-    <View style={styles.container}>    
+    <View style={styles.container}>
       <Text style={styles.title}> Welcome to Pointhunt! </Text>
 
-    <TouchableOpacity
-      style={styles.purpleButton}
-      accessibilityRole="button"
-      accessibilityLabel="Join as Host"
-      onPress={() => {
-        if (!code) return;
-        router.push({ pathname: "/host/testhost", params: { code: code } });
-      }}
-    >
-      <Text style={styles.lightYellowText}> Join as Host </Text>
-    </TouchableOpacity>
-        
-    <TouchableOpacity
-      style={styles.yellowButton}
-      accessibilityRole="button"
-      accessibilityLabel="Join as Guest"
-      onPress={() => router.push('/guest/guest' as any)}
-    >
-      <Text style={styles.lightPurpleText}> Join as Guest </Text>
-    </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.purpleButton}
+        accessibilityRole="button"
+        accessibilityLabel="Join as Host"
+        onPress={() => {
+          if (!code) return;
+          router.push({ pathname: "/host/testhost", params: { code: code } });
+        }}
+      >
+        <Text style={styles.lightYellowText}> Join as Host </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.yellowButton}
+        accessibilityRole="button"
+        accessibilityLabel="Join as Guest"
+        onPress={() => router.push('/guest/guest' as any)}
+      >
+        <Text style={styles.lightPurpleText}> Join as Guest </Text>
+      </TouchableOpacity>
     </View>
-    );
-  }
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -54,51 +54,51 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#AEDDFF" //Mörkblått till bakgrunden
-},
-title: {
+  },
+  title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#7179FF", //Gult
     marginBottom: 40
-},
-purpleButton: {
+  },
+  purpleButton: {
     backgroundColor: '#B89DFF', //lila
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
     width: 225,
     alignItems: "center",
-},
-yellowButton: {
+  },
+  yellowButton: {
     backgroundColor: '#FFDE7D', //gult
     paddingVertical: 14,
     borderRadius: 10,
     width: 225,
     alignItems: "center",
-},
-lightYellowText: {
-  color: '#FFDE7D', //ljusgult
-  fontSize: 18,
-},
-lightPurpleText: {
-  color: '#B89DFF', //lila
-  fontSize: 18,
-},
-redText: {
-  color: '#8C070C', //mörkrött
-  fontSize: 18,
-},
-yellowText: {
-  color: '#CCB307', //gult
-  fontSize: 18,
-},
-codeTextfield: { // Till när man lägger in kod
-  paddingVertical: 14,
-  backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
-  borderRadius: 10,
-  width: 225,
-  alignItems: "center",
-},
+  },
+  lightYellowText: {
+    color: '#FFDE7D', //ljusgult
+    fontSize: 18,
+  },
+  lightPurpleText: {
+    color: '#B89DFF', //lila
+    fontSize: 18,
+  },
+  redText: {
+    color: '#8C070C', //mörkrött
+    fontSize: 18,
+  },
+  yellowText: {
+    color: '#CCB307', //gult
+    fontSize: 18,
+  },
+  codeTextfield: { // Till när man lägger in kod
+    paddingVertical: 14,
+    backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
+    borderRadius: 10,
+    width: 225,
+    alignItems: "center",
+  },
 
 });
 
