@@ -38,14 +38,14 @@ export default function AllTasks() {
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host' as any)}
+          onPress={() => router.push('/host/host' as any)}
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={[styles.navButton, styles.activeNavButton]}
-          onPress={() => router.push('/tasks' as any)}
+          onPress={() => router.push('/host/tasks' as any)}
         >
           <Text style={[styles.navButtonText, styles.activeNavButtonText]}>
             Uppgifter
@@ -66,7 +66,7 @@ export default function AllTasks() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#AEDDFF',
   },
   content: {
     flex: 1,
@@ -75,18 +75,18 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#151B7C',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#B89DFF',
   },
   emptyState: {
     flex: 1,
@@ -97,25 +97,25 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#151B7C',
     marginBottom: 12,
     textAlign: 'center',
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#999',
+    color: '#B89DFF',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
   },
   backButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFDE7D',
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 8,
   },
   backButtonText: {
-    color: 'white',
+    color: '#B89DFF',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
     paddingVertical: 10,
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
   },
   activeNavButton: {
     backgroundColor: '#f0f7ff',
+    borderRadius: 10,
   },
   navButtonText: {
     color: '#007AFF',

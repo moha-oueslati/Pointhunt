@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
 import PointInfo from "./PointInfo";
 import Navbar from "./navbar";
 
@@ -32,25 +32,56 @@ export default function PointList() {
   // Text inputen är en placeholder tills vi har en hårdkodad lista som vi kan skicka in i en funktion för "PointInfo.tsx"
   return (
     <>
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text>Welcome to Pointhunt!</Text>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: 250, marginVertical: 8 }}>
-          <Text>Lag: 1</Text>
-          <Text>10 poäng</Text>
-        </View>
-        {points.map((obj, index) => (
-          <PointInfo key={index} data={obj} ndex={index + 1} />
+
+<ScrollView   style={{ 
+        backgroundColor: "#AEDDFF",}} 
+        contentContainerStyle={[styles.container, { paddingBottom: 120 }]}>
+        <Text style={styles.title}>Poänglista</Text>
+        <View style={styles.frame}>
+          {points.map((obj, index) => (
+          <View key={index} style={styles.taskContainer}>
+          <PointInfo data={obj} ndex={index + 1}/>
+          </View>
         ))}
-      </View>
+        </View>
+        </ScrollView> 
       <View>
         <Navbar />
       </View>
-    </>
+      </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#AEDDFF",
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#B89DFF", 
+    marginTop: 30,
+},
+  frame: {
+    backgroundColor: "#FFEBAF",
+    borderRadius: 20,
+    padding: 20,
+    marginTop: 40,
+  },
+  taskContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 15,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 20,
+  },
+
+});
+

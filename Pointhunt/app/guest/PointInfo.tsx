@@ -9,10 +9,9 @@ export default function PointInfo({ data, ndex }: {
     return (
         <View style={styles.container}>
             <View style={styles.row}>
-                <Text style={styles.index}>{ndex}.</Text>
-                <Text style={styles.mission}>{data.mission}</Text>
+                <Text style={styles.points}>{data.points} Poäng</Text>
             </View>
-            <Text style={styles.points}>{data.points} Poäng</Text>
+        <Text style={styles.index}>{ndex}. {data.mission}</Text>
         </View>
     );
 }
@@ -20,23 +19,23 @@ export default function PointInfo({ data, ndex }: {
 const styles = StyleSheet.create({
     container: {
         padding: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        flex: 1,
     },
     row: {
         flexDirection: 'row',
+        justifyContent: "space-between",
         alignItems: 'center',
-        gap: 8,
+        marginBottom: 3,
     },
     index: {
-        fontWeight: '700',
-        width: 24,
-    },
-    mission: {
-        flex: 1,
+        fontSize: 16,
+        color: "#000",
+
     },
     points: {
-        marginTop: 6,
-        color: '#666',
-    },
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: "#FFDE7D",
+        marginBottom: 10,
+      },
 });
