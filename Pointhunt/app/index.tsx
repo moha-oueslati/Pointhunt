@@ -30,7 +30,7 @@ export default function Index() {
         accessibilityLabel="Join as Host"
         onPress={() => {
           if (!code) return;
-          router.push({ pathname: "/host/testhost", params: { code: code } });
+          router.push({ pathname: "/host/host", params: { code: code } });
         }}
       >
         <Text style={styles.lightYellowText}> Join as Host </Text>

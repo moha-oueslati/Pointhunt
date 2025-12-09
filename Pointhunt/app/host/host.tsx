@@ -10,7 +10,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import TaskCreationModal from '../components/TaskCreationModal';
-import { Task } from '../host/tasks';
+import { Task } from '../types/Task';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { saveTaskToFirebase, getTasksByJoinCode } from '../firebase/taskService';
 
