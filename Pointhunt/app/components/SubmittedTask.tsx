@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,31 +7,52 @@ import {
   FlatList,
   Alert,
 } from "react-native";
+
 import { TaskSubmission } from "../types/Task";
 import VideoSpelare from "../VideoSpelare";
 
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/firebase"; 
 
 export default function HostReviewScreen() {
+  const [submissions, setSubmissions] = useState<TaskSubmission[]>([]);
 
-  const [submissions, setSubmissions] = useState<TaskSubmission[]>([
-    {
-      id: "1",
-      taskId: "101",
-      teamId: "guestA",
-      videoRef: "https://firebasestorage.googleapis.com/....",
-      submittedAt: new Date(),
-      status: "pending",
-    },
-  ]);
+  useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "submissions"),
+      (snapshot) => {
+        const items: TaskSubmission[] = snapshot.docs.map((doc) => {
+          const data = doc.data();
 
-  const handleUpdateStatus = (id: string, newStatus: "approved" | "declined") => {
-    setSubmissions((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, status: newStatus } : item
-      )
+          return {
+            id: doc.id,
+            taskId: data.taskId,
+            teamId: data.teamId,
+            videoRef: data.videoRef,
+            submittedAt: data.submittedAt?.toDate
+              ? data.submittedAt.toDate()
+              : new Date(),
+            status: data.status || "pending",
+          };
+        });
+
+        setSubmissions(items);
+      },
+      (error) => console.log("Firestore error:", error)
     );
 
+    return () => unsub();
+  }, []);
+
+  const handleUpdateStatus = async (
+    id: string,
+    newStatus: "approved" | "declined"
+  ) => {
     Alert.alert("Status ändrad", `Status: ${newStatus}`);
+
+    // Vill du även SKRIVA till Firestore?
+    // importera updateDoc + doc:
+    // await updateDoc(doc(db, "submissions", id), { status: newStatus });
   };
 
   const renderSubmission = ({ item }: { item: TaskSubmission }) => (
@@ -42,10 +63,9 @@ export default function HostReviewScreen() {
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
 
-      {/* Firebase video */}
+      {/* Video från Firebase Storage */}
       <VideoSpelare path={item.videoRef} h={360} w={640} />
 
-      {/* Status Buttons */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={[styles.button, styles.acceptButton]}
@@ -62,7 +82,6 @@ export default function HostReviewScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Status Display */}
       <Text style={styles.status}>
         Status:{" "}
         {item.status === "pending"
@@ -89,6 +108,7 @@ export default function HostReviewScreen() {
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
