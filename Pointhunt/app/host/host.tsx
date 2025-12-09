@@ -136,15 +136,24 @@ export default function Host() {
       {/* navigation bar i botten */}
       <View style={styles.navBar}>
         <TouchableOpacity 
+<<<<<<< HEAD
           style={styles.navButton}
           onPress={() => router.push(`/host/host?code=${joinCode}`)}
+=======
+          style={[styles.navButton, styles.activeNavButton]}
+          onPress={() => router.push('/host/host' as any)}
+>>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
         >
           <Text style={styles.navButtonText}>Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
+<<<<<<< HEAD
           onPress={() => router.push(`/host/tasks?code=${joinCode}`)}
+=======
+          onPress={() => router.push('/host/tasks' as any)}
+>>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
         >
           <Text style={styles.navButtonText}>Uppgifter</Text>
         </TouchableOpacity>
@@ -170,7 +179,7 @@ export default function Host() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#AEDDFF',
   },
   content: {
     flex: 1,
@@ -179,16 +188,17 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#151B7C',
     marginBottom: 8,
   },
   subtitle: {
+<<<<<<< HEAD
     fontSize: 18,
     color: '#007AFF',
     fontWeight: '600',
@@ -198,9 +208,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     fontStyle: 'italic',
+=======
+    fontSize: 16,
+    color: '#151B7C',
+>>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
   },
   createButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFDE7D',
     marginHorizontal: 20,
     marginBottom: 20,
     padding: 16,
@@ -208,9 +222,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   createButtonText: {
-    color: 'white',
+    color: '#B89DFF',
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
   tasksContainer: {
     flex: 1,
@@ -225,6 +239,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+<<<<<<< HEAD
     color: '#333',
   },
   refreshButton: {
@@ -236,6 +251,10 @@ const styles = StyleSheet.create({
   refreshText: {
     color: '#007AFF',
     fontSize: 14,
+=======
+    color: '#151B7C',
+    marginBottom: 16,
+>>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
   },
   tasksList: {
     gap: 12,
@@ -250,12 +269,12 @@ const styles = StyleSheet.create({
   taskTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#151B7C',
     marginBottom: 8,
   },
   taskSummary: {
     fontSize: 14,
-    color: '#666',
+    color: '#151B7C',
     marginBottom: 12,
     lineHeight: 20,
   },
@@ -271,7 +290,7 @@ const styles = StyleSheet.create({
   taskPoints: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#FF9500',
+    color: '#B89DFF',
   },
   loadingContainer: {
     flex: 1,
@@ -291,13 +310,13 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#666',
+    color: '#151B7C',
     marginBottom: 8,
     textAlign: 'center',
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#999',
+    color: '#B89DFF',
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -307,7 +326,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     borderTopWidth: 1,
     borderTopColor: '#ddd',
     paddingVertical: 10,
@@ -318,9 +337,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  activeNavButton: {
+    backgroundColor: '#f0f7ff',
+    borderRadius: 10,
+  },
   navButtonText: {
     color: '#007AFF',
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: 'bold',
   },
 });

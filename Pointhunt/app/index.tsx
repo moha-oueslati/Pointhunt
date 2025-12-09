@@ -21,6 +21,7 @@ export default function Index() {
   }, []);
 
   return (
+<<<<<<< HEAD
     <View style={styles.container}>
       <Text style={styles.title}> Welcome to Pointhunt! </Text>
 
@@ -44,6 +45,31 @@ export default function Index() {
       >
         <Text style={styles.lightPurpleText}> Join as Guest </Text>
       </TouchableOpacity>
+=======
+    <View style={styles.container}>    
+      <Text style={styles.title}> Välkommen till Pointhunt! </Text>
+
+    <TouchableOpacity
+      style={styles.purpleButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Host"
+      onPress={() => {
+        if (!code) return;
+        router.push({ pathname: "/host/testhost", params: { code: code } });
+      }}
+    >
+      <Text style={styles.lightYellowText}>Gå med som värd </Text>
+    </TouchableOpacity>
+        
+    <TouchableOpacity
+      style={styles.yellowButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Guest"
+      onPress={() => router.push('/guest/guest' as any)}
+    >
+      <Text style={styles.lightPurpleText}>Gå med som gäst </Text>
+    </TouchableOpacity>
+>>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
     </View>
   );
 }
@@ -58,7 +84,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#7179FF", //Gult
+    color: "#B89DFF", 
     marginBottom: 40
   },
   purpleButton: {

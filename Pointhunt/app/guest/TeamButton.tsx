@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react';
 
 // Guest
@@ -6,13 +6,15 @@ export default function TeamButton({index, change, topnum}:{index: number, chang
     return(
         <>
         {index !== topnum ? ( 
-                <TouchableOpacity onPress={() => {change(index)}}> 
-                <Text>Lag {index}</Text>
+                <TouchableOpacity style={styles.dropdownItem}
+                onPress={() => {change(index)}}> 
+                <Text style={styles.dropdownText}>Lag {index}</Text>
                 </TouchableOpacity>
             ):
             (
-                <TouchableOpacity onPress={() => {change(0)}}>
-                    <Text>Välj Lag</Text>
+                <TouchableOpacity style={styles.dropdownItem}
+                onPress={() => {change(0)}}>
+                    <Text style={styles.dropdownText}>Välj Lag</Text>
                 </TouchableOpacity>
             )
         }
@@ -21,3 +23,18 @@ export default function TeamButton({index, change, topnum}:{index: number, chang
     );
 
 }
+
+const styles = StyleSheet.create({
+    dropdownItem: {
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        backgroundColor: '#FFEBAF',
+        borderRadius: 15,
+        marginBottom: 5,
+      },
+      dropdownText: {
+        color: "#B89DFF",
+        fontSize: 18,
+        fontWeight: "bold",
+      }
+});

@@ -43,7 +43,7 @@ const docId = code;
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Waiting for host to start the game{dots}</Text>
+      <Text style={styles.text}>Väntar på att värden ska starta spelet{dots}</Text>
     </View>
   );
 }

@@ -178,19 +178,19 @@ const TaskCreationModal: React.FC<TaskCreationModalProps> = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#AEDDFF',
   },
   header: {
     padding: 20,
-    borderBottomWidth: 1,
+    //borderBottomWidth: 1,
     borderBottomColor: '#e0e0e0',
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#333',
+    color: '#151B7C',
   },
   form: {
     flex: 1,
@@ -203,10 +203,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
+    color: '#151B7C',
   },
   input: {
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
     padding: 12,
     borderRadius: 8,
     borderWidth: 1,
@@ -221,9 +221,8 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     padding: 20,
-    borderTopWidth: 1,
     borderTopColor: '#e0e0e0',
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     gap: 12,
   },
   button: {
@@ -239,7 +238,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   saveButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFDE7D',
   },
   cancelButtonText: {
     color: '#666',
@@ -247,7 +246,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   saveButtonText: {
-    color: 'white',
+    color: '#B89DFF',
     fontSize: 16,
     fontWeight: '600',
   },

@@ -63,9 +63,9 @@ export default function HostReviewScreen() {
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
 
-      {/* Video från Firebase Storage */}
-      <VideoSpelare path={item.videoRef} h={360} w={640} />
-
+      {/* Firebase video 
+      <VideoSpelare path={item.videoRef} h={360} w={'100%'} />
+*/}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={[styles.button, styles.acceptButton]}
@@ -113,50 +113,46 @@ export default function HostReviewScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#AEDDFF",
   },
 
   header: {
     padding: 20,
     borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    backgroundColor: "white",
+    borderBottomColor: "#6A4BBC",
+    backgroundColor: "#C5E7FF",
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333",
+    color: "#6A4BBC",
   },
 
   card: {
-    backgroundColor: "white",
+    backgroundColor: "#B89DFF",
     padding: 20,
     borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#e0e0e0",
+    borderWidth: 3,
+    borderColor: "#6A4BBC",
     marginBottom: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
   },
 
   title: {
     fontSize: 18,
-    fontWeight: "700",
-    color: "#333",
+    fontWeight: "bold",
+    color: "#151B7C",
     marginBottom: 6,
   },
 
-  subtitle: {
+  subtitle: { //taskid
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
     marginBottom: 6,
-    color: "#555",
+    color: "#6A4BBC",
   },
 
-  date: {
+  date: { 
     fontSize: 14,
-    color: "#777",
+    color: "#6A4BBC",
     marginBottom: 10,
   },
 
@@ -175,7 +171,7 @@ const styles = StyleSheet.create({
   },
 
   acceptButton: {
-    backgroundColor: "#007AFF",
+    backgroundColor: "#FFDE7D",
   },
 
   declineButton: {
@@ -186,13 +182,13 @@ const styles = StyleSheet.create({
 
   buttonText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
+    color: '#6A4BBC',
   },
-
   status: {
     marginTop: 14,
     fontSize: 16,
     fontWeight: "600",
-    color: "#444",
+    color: "#151B7C",
   },
 });
