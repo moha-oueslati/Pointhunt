@@ -22,7 +22,7 @@ export default function Waiting() {
       console.log("Snapshot data:", data);
 
       if (data?.gameStarted === true) {
-        router.replace("/guest/home");
+        router.replace("/guest/hem" as any);
       }
     });
 
