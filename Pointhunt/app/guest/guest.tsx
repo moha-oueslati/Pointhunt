@@ -34,7 +34,7 @@ export default function Guest() {
       <Text style={styles.title}>Join!</Text>
 
       <TextInput
-        placeholder="Skriv kod"
+        placeholder="Skriv kod..."
         value={code}
         onChangeText={setCode}
         style={styles.input}
@@ -52,35 +52,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#A8EFAB",
+    backgroundColor: "#AEDDFF",
   },
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#614417",
+    color: "#7179FF",
     marginBottom: 40,
   },
   input: {
     width: 225,
     backgroundColor: "#fff",
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "#B89DFF",
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 15,
     marginBottom: 20,
     fontSize: 16,
-    textAlign: "center",
   },
   button: {
-    backgroundColor: "#614417",
+    backgroundColor: "#FFDE7D",
     paddingVertical: 14,
     borderRadius: 10,
     width: 225,
     alignItems: "center",
   },
   buttonText: {
-    color: "#fff",
+    color: "#B89DFF",
     fontWeight: "bold",
     fontSize: 16,
   },
