@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { getAllTasks, getTasksByJoinCode } from '../firebase/taskService';
-import { Task } from '../../types/Task';
+import { Task } from '../types/Task';
 
 export default function AllTasks() {
   const router = useRouter();

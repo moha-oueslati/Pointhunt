@@ -41,7 +41,7 @@ export default function HostReviewScreen() {
 
   const renderSubmission = ({ item }: { item: TaskSubmission }) => (
     <View style={styles.card}>
-      <Text style={styles.title}>Inskickad Uppgift</Text>
+      <Text style={styles.title}>Uppgiftstitel</Text>
       <Text style={styles.subtitle}>Task ID: {item.taskId}</Text>
       <Text style={styles.date}>
         Inskickad: {item.submittedAt.toLocaleString()}
@@ -49,8 +49,8 @@ export default function HostReviewScreen() {
 
       {/* Ska egentligen vara en videospelare */}
       <Image
-        style={{ width: 640, height: 320, borderRadius: 8 }}
-        source={require("../pics/hot_dog_with_mustard.png")}
+        style={{ width: "100%", height: 200, borderRadius: 8, marginVertical: 10 }}
+        source={require("../pics/placeholder.png")}
         resizeMode="cover"
       />
 
@@ -75,10 +75,10 @@ export default function HostReviewScreen() {
       <Text style={styles.status}>
         Status:{" "}
         {item.status === "pending"
-          ? "⏳ Avvaktar"
+          ? "Avvaktar ⏳ "
           : item.status === "approved"
-          ? "✅ Godkänd"
-          : "❌ Nekad"}
+          ? "Godkänd ✅ "
+          : "Nekad ❌ "}
       </Text>
     </View>
   );
