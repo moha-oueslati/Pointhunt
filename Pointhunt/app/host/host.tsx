@@ -155,6 +155,12 @@ export default function Host() {
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inlämningar</Text>
+        </TouchableOpacity>
       </View>
 
       {/* popup-fönster för att skapa uppgifter */}

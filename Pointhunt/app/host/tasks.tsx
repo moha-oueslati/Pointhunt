@@ -150,6 +150,12 @@ export default function AllTasks() {
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inlämningar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -6,12 +6,17 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  Image,
 } from "react-native";
 import { TaskSubmission } from "../types/Task";
-import VideoSpelare from "../VideoSpelare";
+import { router, useLocalSearchParams } from "expo-router";
 
 
 export default function HostReviewScreen() {
+  const params = useLocalSearchParams();
+
+  // Hämta joinCode från URL-parametrar
+  const joinCode = params.code ? String(params.code) : 'ABCD';
 
   const [submissions, setSubmissions] = useState<TaskSubmission[]>([
     {
@@ -42,8 +47,12 @@ export default function HostReviewScreen() {
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
 
-      {/* Firebase video */}
-      <VideoSpelare path={item.videoRef} h={360} w={640} />
+      {/* Ska egentligen vara en videospelare */}
+      <Image
+        style={{ width: 640, height: 320, borderRadius: 8 }}
+        source={require("../pics/hot_dog_with_mustard.png")}
+        resizeMode="cover"
+      />
 
       {/* Status Buttons */}
       <View style={styles.buttonRow}>
@@ -86,6 +95,35 @@ export default function HostReviewScreen() {
         renderItem={renderSubmission}
         contentContainerStyle={{ padding: 20 }}
       />
+      {/* navigation bar i botten */}
+      <View style={styles.navBar}>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/host?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Hem</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/tasks?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Uppgifter</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/settings?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inställningar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inlämningar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -105,6 +143,30 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     color: "#333",
+  },
+
+  navBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 10,
+    height: 60,
+  },
+
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
 
   card: {

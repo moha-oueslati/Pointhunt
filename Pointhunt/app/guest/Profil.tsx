@@ -35,7 +35,7 @@ export default function Profil() {
           {/*Flöde av lagets alla videoklipp*/}
           <Text style={{ fontSize: 25, fontWeight: "bold" }}>Klipp:</Text>
           <VideoSpelare
-            //path={require("../assets/julhalsning_final.mp4")}
+            path="placeholder"//{require("../assets/julhalsning_final.mp4")}
             h={180}
             w={320}
           />
