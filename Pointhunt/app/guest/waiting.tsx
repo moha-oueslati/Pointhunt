@@ -6,10 +6,10 @@ import { db } from "../firebase/firebase";
 
 export default function Waiting() {
   const router = useRouter();
-  const { code } = useLocalSearchParams<{ code?: string | string[] }>();
+const { code } = useLocalSearchParams<{ code?: string }>();
+const docId = code;
   console.log("Waiting room code:", code);
 
-  const docId = code ? (Array.isArray(code) ? code[0] : code) : undefined;
   const [dots, setDots] = React.useState(".");
 
   useEffect(() => {
