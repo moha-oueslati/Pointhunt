@@ -21,31 +21,6 @@ export default function Index() {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <View style={styles.container}>
-      <Text style={styles.title}> Welcome to Pointhunt! </Text>
-
-      <TouchableOpacity
-        style={styles.purpleButton}
-        accessibilityRole="button"
-        accessibilityLabel="Join as Host"
-        onPress={() => {
-          if (!code) return;
-          router.push({ pathname: "/host/host", params: { code: code } });
-        }}
-      >
-        <Text style={styles.lightYellowText}> Join as Host </Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        style={styles.yellowButton}
-        accessibilityRole="button"
-        accessibilityLabel="Join as Guest"
-        onPress={() => router.push('/guest/guest' as any)}
-      >
-        <Text style={styles.lightPurpleText}> Join as Guest </Text>
-      </TouchableOpacity>
-=======
     <View style={styles.container}>    
       <Text style={styles.title}> Välkommen till Pointhunt! </Text>
 
@@ -55,7 +30,7 @@ export default function Index() {
       accessibilityLabel="Join as Host"
       onPress={() => {
         if (!code) return;
-        router.push({ pathname: "/host/testhost", params: { code: code } });
+        router.push({ pathname: "/host/host", params: { code: code } });
       }}
     >
       <Text style={styles.lightYellowText}>Gå med som värd </Text>
@@ -69,7 +44,6 @@ export default function Index() {
     >
       <Text style={styles.lightPurpleText}>Gå med som gäst </Text>
     </TouchableOpacity>
->>>>>>> 8aaac3ca1238a652fd3b45d52dd081cbc202ec99
     </View>
   );
 }
