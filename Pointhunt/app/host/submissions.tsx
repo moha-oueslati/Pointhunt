@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,66 +6,55 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  Image,
 } from "react-native";
-
 import { TaskSubmission } from "../types/Task";
-import VideoSpelare from "../VideoSpelare";
+import { router, useLocalSearchParams } from "expo-router";
 
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase/firebase"; 
 
 export default function HostReviewScreen() {
-  const [submissions, setSubmissions] = useState<TaskSubmission[]>([]);
+  const params = useLocalSearchParams();
 
-  useEffect(() => {
-    const unsub = onSnapshot(
-      collection(db, "submissions"),
-      (snapshot) => {
-        const items: TaskSubmission[] = snapshot.docs.map((doc) => {
-          const data = doc.data();
+  // Hämta joinCode från URL-parametrar
+  const joinCode = params.code ? String(params.code) : 'ABCD';
 
-          return {
-            id: doc.id,
-            taskId: data.taskId,
-            teamId: data.teamId,
-            videoRef: data.videoRef,
-            submittedAt: data.submittedAt?.toDate
-              ? data.submittedAt.toDate()
-              : new Date(),
-            status: data.status || "pending",
-          };
-        });
+  const [submissions, setSubmissions] = useState<TaskSubmission[]>([
+    {
+      id: "1",
+      taskId: "101",
+      teamId: "guestA",
+      videoRef: "https://firebasestorage.googleapis.com/....",
+      submittedAt: new Date(),
+      status: "pending",
+    },
+  ]);
 
-        setSubmissions(items);
-      },
-      (error) => console.log("Firestore error:", error)
+  const handleUpdateStatus = (id: string, newStatus: "approved" | "declined") => {
+    setSubmissions((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, status: newStatus } : item
+      )
     );
 
-    return () => unsub();
-  }, []);
-
-  const handleUpdateStatus = async (
-    id: string,
-    newStatus: "approved" | "declined"
-  ) => {
     Alert.alert("Status ändrad", `Status: ${newStatus}`);
-
-    // Vill du även SKRIVA till Firestore?
-    // importera updateDoc + doc:
-    // await updateDoc(doc(db, "submissions", id), { status: newStatus });
   };
 
   const renderSubmission = ({ item }: { item: TaskSubmission }) => (
     <View style={styles.card}>
-      <Text style={styles.title}>Inskickad Uppgift</Text>
+      <Text style={styles.title}>Uppgiftstitel</Text>
       <Text style={styles.subtitle}>Task ID: {item.taskId}</Text>
       <Text style={styles.date}>
         Inskickad: {item.submittedAt.toLocaleString()}
       </Text>
 
-      {/* Firebase video 
-      <VideoSpelare path={item.videoRef} h={360} w={'100%'} />
-*/}
+      {/* Ska egentligen vara en videospelare */}
+      <Image
+        style={{ width: "100%", height: 200, borderRadius: 8, marginVertical: 10 }}
+        source={require("../../assets/placeholder.png")}
+        resizeMode="cover"
+      />
+
+      {/* Status Buttons */}
       <View style={styles.buttonRow}>
         <TouchableOpacity
           style={[styles.button, styles.acceptButton]}
@@ -82,13 +71,14 @@ export default function HostReviewScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Status Display */}
       <Text style={styles.status}>
         Status:{" "}
         {item.status === "pending"
-          ? "⏳ Avvaktar"
+          ? "Avvaktar ⏳ "
           : item.status === "approved"
-          ? "✅ Godkänd"
-          : "❌ Nekad"}
+          ? "Godkänd ✅ "
+          : "Nekad ❌ "}
       </Text>
     </View>
   );
@@ -105,10 +95,38 @@ export default function HostReviewScreen() {
         renderItem={renderSubmission}
         contentContainerStyle={{ padding: 20 }}
       />
+      {/* navigation bar i botten */}
+      <View style={styles.navBar}>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/host?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Hem</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/tasks?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Uppgifter</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/settings?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inställningar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}>Inlämningar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -126,6 +144,31 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#6A4BBC",
   },
+
+  navBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 10,
+    height: 60,
+  },
+
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navButtonText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+
 
   card: {
     backgroundColor: "#B89DFF",
