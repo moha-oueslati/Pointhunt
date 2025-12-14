@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import Navbar from "./navbar";
-import VideoSpelare from "../VideoSpelare";
 
 export default function Profil() {
   return (
@@ -20,15 +19,6 @@ export default function Profil() {
           {/*Margin sätter vart navbar hamnar just nu,
            inte speciellt najs men vet typ inte hur det ska fixas */
           }
-          
-          {/*Flöde av lagets alla videoklipp
-          <Text style={{ fontSize: 25, fontWeight: "bold" }}>Klipp:</Text>
-          <VideoSpelare
-            path={require("../assets/julhalsning_final.mp4")}
-            h={180}
-            w={'100%'}
-          />
-*/}
       </View>
       <Navbar />
     </>

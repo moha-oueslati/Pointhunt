@@ -12,15 +12,6 @@ export default function Hem() {
         <View style={styles.teamContainer}>
           <Text style={styles.teamText}>Ditt lag: Lag 67</Text>
         </View>
-        {/* 
-        <View style={styles.videoContainer}>
-          <VideoSpelare
-            path={require("../assets/Gyckel2_kebab.mp4")}
-            w={320}
-            h={180}
-          />
-        </View>
-        */}
       </ScrollView>
       <View style={styles.navBar}>
         <Navbar />

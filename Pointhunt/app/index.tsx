@@ -41,7 +41,7 @@ export default function Index() {
       players: []
     });
 
-    // 🔹 Skicka användaren till host-sidan
+    //Skicka användaren till host-sidan
     router.push({ pathname: "/host/host", params: { code } });
   }}
     >

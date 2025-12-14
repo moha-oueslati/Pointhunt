@@ -18,7 +18,6 @@ export default function Guest() {
   async function handleJoin() {
     if (code.trim() === "") {
       Alert.alert("Error", "Skriv in kod.");
-      console.log("Error, skrv in kod", code);
       return;
     }
 
@@ -29,18 +28,15 @@ export default function Guest() {
 
       if (!snap.empty) {
         //Gå till waitingroom
-        console.log("Attempting to join with code:", code);
         router.push({
           pathname: "/guest/waiting",
           params: { code }
         });
       } else {
-        console.log("Ogiltig kod", code);
         Alert.alert("Ogiltig kod", "Inget spel finns med den koden.");
       }
     } catch (err) {
       Alert.alert("Error", "Kan inte ansluta till servern.");
-      console.log("Error", code);
       console.error(err);
     }
   }

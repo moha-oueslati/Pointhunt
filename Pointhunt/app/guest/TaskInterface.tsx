@@ -9,7 +9,6 @@ import { View,
 import TeamButton from "./TeamButton";
 import Navbar from "./navbar";
 
-
 // Guest
 export default function TaskInterface() {
   const [open, setOpen] = useState(false);
