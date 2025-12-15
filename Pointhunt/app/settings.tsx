@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#B89DFF',
+    color: '#A786FF',
   },
   settingsForm: {
     padding: 20,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   saveButtonText: {
-    color: '#B89DFF',
+    color: '#A786FF',
     fontSize: 16,
     fontWeight: '600',
   },

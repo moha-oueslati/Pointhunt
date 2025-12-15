@@ -43,15 +43,9 @@ const styles = StyleSheet.create({
         backgroundColor: "#AEDDFF",
         alignItems: 'center',
     },
-    title: {
-        fontSize: 32,
-        fontWeight: "bold",
-        color: "#1A2553",
-        marginBottom: 30,
-    },
     codeTitle: {
         fontSize: 28,
-        color: "#1A2553",
+        color: "#A786FF",
         marginBottom: 6,
         fontWeight: "bold",
     },
@@ -71,7 +65,7 @@ const styles = StyleSheet.create({
 
     startButtonText: {
         fontSize: 22,
-        color: "#B89DFF",
+        color: "#A786FF",
         fontWeight: "bold",
     },
 });

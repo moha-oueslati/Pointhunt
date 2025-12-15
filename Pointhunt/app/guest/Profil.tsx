@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   teamName: {
     fontSize: 36,
     fontWeight: "700",
-    color: "#B89DFF",
+    color: "#A786FF",
     marginBottom: 20,
   },
 
@@ -57,14 +57,14 @@ const styles = StyleSheet.create({
     borderRadius: 80,         
     backgroundColor: "#fff",
     borderWidth: 4,
-    borderColor: "#B89DFF",
+    borderColor: "#A786FF",
     marginBottom: 20,
   },
 
   points: {
     fontSize: 26,
     fontWeight: "600",
-    color: "#B89DFF",
+    color: "#A786FF",
     marginBottom: 30,
   },
 });

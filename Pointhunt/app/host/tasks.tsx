@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#B89DFF',
+    color: '#A786FF',
   },
   emptyState: {
     flex: 1,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#B89DFF',
+    color: '#A786FF',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   backButtonText: {
-    color: '#B89DFF',
+    color: '#A786FF',
     fontSize: 16,
     fontWeight: '600',
   },

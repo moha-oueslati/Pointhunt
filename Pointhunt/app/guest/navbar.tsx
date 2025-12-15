@@ -30,7 +30,7 @@ export default function Navbar() {
     >
       <View style={[styles.navbar]}>
         {/*Denna knapp kanske behöver en bild*/}
-        <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/home")}>
+        <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/hem")}>
           <Image
             source={require("../guest/image/hemImg.png")}
             style={[styles.Image]}

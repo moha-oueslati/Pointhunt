@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
 
   teamText: {
     fontSize: 18,
-    color: '#B89DFF',
+    color: '#A786FF',
     textAlign: "center",
     fontWeight: 'bold',
   },
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   uploadButton: {
-    backgroundColor: "#B89DFF",
+    backgroundColor: "#A786FF",
     borderRadius: 10,
     padding: 12,
     alignItems: "center",
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   },
 
   sendText: {
-    color: "#B89DFF",
+    color: "#A786FF",
     fontSize: 22,
     fontWeight: "bold",
   },

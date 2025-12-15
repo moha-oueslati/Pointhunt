@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   title: {
       fontSize: 32,
       fontWeight: "bold",
-      color: "#7179FF", //Mörkblått
+      color: "#A786FF", //lila
       marginBottom: 20,
   },
 
@@ -77,6 +77,6 @@ const styles = StyleSheet.create({
 
   points: {
     fontSize: 20,
-    color: "#B89DFF", //Ljuslila
+    color: "#A786FF", //Ljuslila
   },
 });

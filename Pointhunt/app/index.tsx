@@ -58,11 +58,11 @@ const styles = StyleSheet.create({
 title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#B89DFF", 
+    color: "#A786FF", 
     marginBottom: 40
 },
 purpleButton: {
-    backgroundColor: '#B89DFF', //lila
+    backgroundColor: '#A786FF', //lila
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
@@ -81,7 +81,7 @@ lightYellowText: {
   fontSize: 18,
 },
 lightPurpleText: {
-  color: '#B89DFF', //lila
+  color: '#A786FF', //lila
   fontSize: 18,
 },
 redText: {
