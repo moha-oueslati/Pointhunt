@@ -1,7 +1,6 @@
 import React from "react";
-import { View, Text, ScrollView } from "react-native";
-import VideoSpelare from "../VideoSpelare";
-import Navbar from "./navbar";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
+import Navbar from "../guest/navbar";
 
 export default function Hem() {
   return (

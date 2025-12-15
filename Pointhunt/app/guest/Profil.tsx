@@ -11,7 +11,7 @@ export default function Profil() {
           <Text style={styles.teamName}>Lag 67</Text>
           
           {/* Profilbild*/}
-          <Image src="" alt=""style={styles.profileImage}
+          <Image source={require("../guest/image/christmashat.jpg")} style={styles.profileImage}
           />
           {/*Poäng för laget*/}
           <Text style={styles.points}>Poäng: 120</Text>
@@ -33,28 +33,26 @@ const styles = StyleSheet.create({
     paddingTop: 60,
 
   },
-
   teamName: {
     fontSize: 36,
-    fontWeight: "700",
+    fontWeight: "bold",
     color: "#A786FF",
-    marginBottom: 20,
+    marginTop: 190,
   },
 
   profileImage: {
     width: 160,
     height: 160,
     borderRadius: 80,         
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     borderWidth: 4,
     borderColor: "#A786FF",
+    marginTop: 30,
     marginBottom: 20,
   },
-
   points: {
     fontSize: 26,
     fontWeight: "600",
     color: "#A786FF",
-    marginBottom: 30,
   },
 });

@@ -118,7 +118,7 @@ export default function HostReviewScreen() {
           <Text style={styles.navButtonText}>Inställningar</Text>
         </TouchableOpacity>
         <TouchableOpacity 
-          style={styles.navButton}
+          style={[styles.navButton, styles.activeNavButton]}
           onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
         >
           <Text style={styles.navButtonText}>Inlämningar</Text>
@@ -144,32 +144,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#6A4BBC",
   },
-
-  navBar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    paddingVertical: 10,
-    height: 60,
-  },
-
-  navButton: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  navButtonText: {
-    color: '#007AFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-
-
   card: {
     backgroundColor: "#B89DFF",
     padding: 20,
@@ -233,5 +207,37 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#151B7C",
+  },
+  navBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    backgroundColor: '#C5E7FF',
+    borderTopWidth: 2,
+    borderTopColor: '#151B7C',
+    paddingVertical: 10,
+    height: 60,
+  },
+  navButton: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  activeNavButton: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    color: '#151B7C',
+    fontWeight: 'bold',
+  },
+  navButtonText: {
+    color: '#151B7C',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  activeNavButtonText: {
+    color: '#151B7C',
+    fontWeight: 'bold',
   },
 });

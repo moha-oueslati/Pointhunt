@@ -185,7 +185,7 @@ export default function Settings() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#AEDDFF',
   },
   content: {
     flex: 1,
@@ -194,18 +194,18 @@ const styles = StyleSheet.create({
   },
   header: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#C5E7FF',
     marginBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#151B7C',
     marginBottom: 8,
   },
   subtitle: {
     fontSize: 16,
-    color: '#666',
+    color: '#A786FF',
   },
   loadingContainer: {
     flex: 1,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
   },
   settingsForm: {
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#BABEFF',
     marginHorizontal: 20,
     borderRadius: 8,
   },
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#333',
+    color: '#151B7C',
   },
   input: {
     backgroundColor: '#f8f9fa',
@@ -257,21 +257,21 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   saveButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#FFDE7D',
   },
   resetButtonText: {
-    color: '#666',
+    color: '#A786FF',
     fontSize: 16,
     fontWeight: '600',
   },
   saveButtonText: {
-    color: 'white',
+    color: '#A786FF',
     fontSize: 16,
     fontWeight: '600',
   },
   infoText: {
     fontSize: 12,
-    color: '#999',
+    color: '#151B7C',
     textAlign: 'center',
     fontStyle: 'italic',
     marginTop: 8,
@@ -282,9 +282,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'row',
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    backgroundColor: '#C5E7FF',
+    borderTopWidth: 2,
+    borderTopColor: '#151B7C',
     paddingVertical: 10,
     height: 60,
   },
@@ -294,15 +294,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeNavButton: {
-    backgroundColor: '#f0f7ff',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    color: '#151B7C',
+    fontWeight: 'bold',
   },
   navButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontSize: 14,
     fontWeight: '600',
   },
   activeNavButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontWeight: 'bold',
   },
 });

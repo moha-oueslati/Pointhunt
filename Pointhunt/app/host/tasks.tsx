@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     backgroundColor: '#C5E7FF',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopWidth: 2,
+    borderTopColor: '#151B7C',
     paddingVertical: 10,
     height: 60,
   },
@@ -143,16 +143,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeNavButton: {
-    backgroundColor: '#f0f7ff',
+    backgroundColor: 'white',
     borderRadius: 10,
+    color: '#151B7C',
+    fontWeight: 'bold',
   },
   navButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontSize: 14,
     fontWeight: '600',
   },
   activeNavButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontWeight: 'bold',
   },
 });
