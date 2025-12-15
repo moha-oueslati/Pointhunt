@@ -67,7 +67,7 @@ export default function TaskInterface() {
         <Image source={filePic} style={styles.uploadImage}/>
       <input style={styles.label} type="file" accept="video/*" id="VidInput" hidden/>
       <TouchableOpacity style={styles.uploadButton}>
-      <Text style={styles.uploadText}>Ladda ned fil här!</Text>
+      <Text style={styles.uploadText}>Ladda upp fil här!</Text>
       </TouchableOpacity>
       </label>
       </View>
