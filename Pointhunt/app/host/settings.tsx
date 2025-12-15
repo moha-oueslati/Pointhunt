@@ -260,12 +260,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFDE7D',
   },
   resetButtonText: {
-    color: '#A786FF',
+    color: '#6A4BBC',
     fontSize: 16,
     fontWeight: '600',
   },
   saveButtonText: {
-    color: '#A786FF',
+    color: '#6A4BBC',
     fontSize: 16,
     fontWeight: '600',
   },

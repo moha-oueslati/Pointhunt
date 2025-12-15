@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   createButtonText: {
-    color: '#B89DFF',
+    color: '#6A4BBC',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#B89DFF',
+    color: '#6A4BBC',
     textAlign: 'center',
     lineHeight: 20,
   },

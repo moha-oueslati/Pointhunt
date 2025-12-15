@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#A786FF',
+    color: '#6A4BBC',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   backButtonText: {
-    color: '#A786FF',
+    color: '#6A4BBC',
     fontSize: 16,
     fontWeight: '600',
   },
