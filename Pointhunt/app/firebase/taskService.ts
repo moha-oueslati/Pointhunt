@@ -9,7 +9,7 @@ import {
   orderBy,
   serverTimestamp 
 } from 'firebase/firestore';
-import { Task, TaskFormData } from '../types/Task';
+import { Task } from '../types/Task';
 
 // spara task till firebase
 export async function saveTaskToFirebase(

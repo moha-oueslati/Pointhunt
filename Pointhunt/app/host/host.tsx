@@ -1,5 +1,5 @@
 // app/host/host.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import TaskCreationModal from '../components/TaskCreationModal';
 import { Task } from '../types/Task';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { saveTaskToFirebase, getTasksByJoinCode } from '../firebase/taskService';
-import { startGame, stopGame, checkGameStatus } from '../firebase/gameService';
+import { startGame, stopGame } from '../firebase/gameService';
 
 export default function Host() {
   const router = useRouter();
@@ -26,32 +26,38 @@ export default function Host() {
   
   const joinCode = params.code ? String(params.code) : 'ABCD';
   
-  useEffect(() => {
-    loadTasks();
-    checkGameStatusOnLoad();
-  }, [joinCode]);
-  
-  const checkGameStatusOnLoad = async () => {
-    try {
-      const status = await checkGameStatus(joinCode);
-      setIsGameActive(status === 'active');
-    } catch (error) {
-      console.error('Kunde inte kolla spelstatus:', error);
+const loadTasks = useCallback(async () => {
+  setIsLoading(true);
+  try {
+    const firebaseTasks = await getTasksByJoinCode(joinCode);
+    setTasks(firebaseTasks);
+  } catch (_error) {  // _error då den ej används, vill ha kvar ifall man vill ändra det i framtiden.
+    Alert.alert('Fel', 'Kunde inte ladda uppgifter från servern');
+  } finally {
+    setIsLoading(false);
+  }
+}, [joinCode]);
+
+ const checkGameStatusOnLoad = useCallback(async () => {
+  try {
+    const session = await getGameSession(joinCode);
+    if (session) {
+      setGameSession(session);
+      setIsGameActive(session.status === 'active');
+      setPlayerCount(session.playerCount || 0);
     }
-  };
+  } catch (error) {
+    console.error('Error loading game session:', error);
+  }
+}, [joinCode]);
+
+useEffect(() => {
+  loadTasks();
+  checkGameStatusOnLoad();
+}, [joinCode, loadTasks, checkGameStatusOnLoad]);
   
-  const loadTasks = async () => {
-    setIsLoading(true);
-    try {
-      const firebaseTasks = await getTasksByJoinCode(joinCode);
-      setTasks(firebaseTasks);
-    } catch (error) {
-      Alert.alert('Fel', 'Kunde inte ladda uppgifter från servern');
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+
+
   
   const handleSaveTask = async (taskData: Omit<Task, 'id' | 'createdAt'>) => {
     try {
@@ -103,6 +109,7 @@ export default function Host() {
         Alert.alert('Fel', 'Kunde inte stoppa spelet');
       }
     } catch (error) {
+       console.error('Failed to save task:', error);
       Alert.alert('Fel', 'Ett fel uppstod vid stopp av spel');
     } finally {
       setGameLoading(false);

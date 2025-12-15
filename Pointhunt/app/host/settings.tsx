@@ -25,10 +25,7 @@ export default function Settings() {
   
   // Ladda inställningar när komponenten monteras
   useEffect(() => {
-    loadSettings();
-  }, [joinCode]);
-  
-  const loadSettings = async () => {
+  async function loadSettings() {
     setIsLoading(true);
     try {
       const settings = await getHuntSettings(joinCode);
@@ -42,7 +39,10 @@ export default function Settings() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
+  
+  loadSettings();
+}, [joinCode]);
   
   const saveSettings = async () => {
     if (!huntName.trim() || !hostName.trim()) {
