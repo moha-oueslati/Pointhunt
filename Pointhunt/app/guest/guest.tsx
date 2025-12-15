@@ -1,7 +1,14 @@
-import { View, TouchableOpacity, Text, TextInput, StyleSheet, Alert } from "react-native";
 import React, { useState } from "react";
+import { 
+  View, 
+  Text, 
+  TextInput, 
+  TouchableOpacity, 
+  StyleSheet, 
+  Alert 
+} from "react-native";
 import { useRouter } from "expo-router";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export default function Guest() {
@@ -10,22 +17,27 @@ export default function Guest() {
 
   async function handleJoin() {
     if (code.trim() === "") {
-      Alert.alert("Error", "Please enter a code.");
+      Alert.alert("Error", "Skriv in kod.");
       return;
     }
 
-    const ref = doc(db, "codes", code);
-    const snap = await getDoc(ref);
+    try {
+      const ref = collection(db, "games");
+      const q = query(ref, where("joinCode", "==", code));
+      const snap = await getDocs(q);
 
-    if (snap.exists()) {
-
-      router.push({
-  pathname: "/guest/waiting",
-  params: { code: code }
-});
-
-    } else {
-      Alert.alert("Invalid Code", "No game found with that code.");
+      if (!snap.empty) {
+        //Gå till waitingroom
+        router.push({
+          pathname: "/guest/waiting",
+          params: { code }
+        });
+      } else {
+        Alert.alert("Ogiltig kod", "Inget spel finns med den koden.");
+      }
+    } catch (err) {
+      Alert.alert("Error", "Kan inte ansluta till servern.");
+      console.error(err);
     }
   }
 
@@ -46,7 +58,6 @@ export default function Guest() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

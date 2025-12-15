@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, ScrollView, StyleSheet } from "react-native";
+import { View, Text, ScrollView } from "react-native";
+import VideoSpelare from "../VideoSpelare";
 import Navbar from "./navbar";
 
 export default function Hem() {
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#B69AFF",
+    color: "#B497FF",
   },
   videoContainer: {
     alignItems: "center",

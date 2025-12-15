@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { codeGenerate } from "./firebase/codeGenerator";
-
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 
 export default function Index() {
   const router = useRouter();
 
 
-  // store generated code in state so it's available to the button handler
+  //lagra den genererade koden i state
   const [code, setCode] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -28,10 +29,21 @@ export default function Index() {
       style={styles.purpleButton}
       accessibilityRole="button"
       accessibilityLabel="Join as Host"
-      onPress={() => {
-        if (!code) return;
-        router.push({ pathname: "/host/testhost", params: { code: code } });
-      }}
+      onPress={async () => {
+      if (!code) return;
+
+      //Skapa session i firestore
+      const gameRef = doc(db, "games", code);
+      await setDoc(gameRef, {
+      joinCode: code,
+      status: "waiting",
+      createdAt: serverTimestamp(),
+      players: []
+    });
+
+    //Skicka användaren till host-sidan
+    router.push({ pathname: "/host/host", params: { code } });
+  }}
     >
       <Text style={styles.lightYellowText}>Gå med som värd </Text>
     </TouchableOpacity>
@@ -45,8 +57,8 @@ export default function Index() {
       <Text style={styles.lightPurpleText}>Gå med som gäst </Text>
     </TouchableOpacity>
     </View>
-    );
-  }
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -54,8 +66,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#AEDDFF" //Mörkblått till bakgrunden
-},
-title: {
+  },
+  title: {
     fontSize: 32,
     fontWeight: "bold",
     color: "#A786FF", 
@@ -68,8 +80,8 @@ purpleButton: {
     marginBottom: 20,
     width: 225,
     alignItems: "center",
-},
-yellowButton: {
+  },
+  yellowButton: {
     backgroundColor: '#FFDE7D', //gult
     paddingVertical: 14,
     borderRadius: 10,

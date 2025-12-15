@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { useRouter, useLocalSearchParams } from "expo-router";
-import { doc, onSnapshot } from "firebase/firestore";
+import { where, collection, getDocs, query, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 
 export default function Waiting() {
@@ -12,22 +12,39 @@ const docId = code;
 
   const [dots, setDots] = React.useState(".");
 
-  useEffect(() => {
-    if (!docId) return;
+useEffect(() => {
+  if (!docId) return;
 
-    const gameRef = doc(db, "codes", docId);
+  const checkStatus = async () => {
+    const gamesRef = collection(db, "games");
+    const q = query(gamesRef, where("joinCode", "==", docId));
+    const snap = await getDocs(q);
 
-    const unsubscribe = onSnapshot(gameRef, (snapshot) => {
-      const data = snapshot.data();
-      console.log("Snapshot data:", data);
-
-      if (data?.gameStarted === true) {
-        router.replace("/guest/hem" as any);
+    if (!snap.empty) {
+      const data = snap.docs[0].data(); //Kolla om spelet redan är aktivt
+      if (data?.status === "active") {
+        router.replace({ pathname: "/guest/hem", params: { code: docId } });
+        return;
       }
-    });
 
-    return () => unsubscribe();
-  }, [docId, router]);
+      //Fixa snapshot listener i waiting room
+      const gameRef = snap.docs[0].ref;
+      const unsubscribe = onSnapshot(gameRef, (snapshot) => {
+        const data = snapshot.data();
+        if (data?.status === "active") {
+          router.replace({ pathname: "/guest/hem", params: { code: docId } });
+        }
+      });
+      return unsubscribe;
+    }
+  };
+
+  const unsubPromise = checkStatus();
+  return () => {
+    unsubPromise?.then((unsub) => unsub && unsub());
+  };
+}, [docId, router]);
+
 
   // punkterna rör på sig
   useEffect(() => {

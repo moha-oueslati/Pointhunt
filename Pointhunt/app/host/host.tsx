@@ -1,5 +1,5 @@
-// app/host.tsx
-import React, { useState } from 'react';
+// app/host/host.tsx
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,26 +7,115 @@ import {
   StyleSheet,
   FlatList,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import TaskCreationModal from '../components/TaskCreationModal';
 import { Task } from '../types/Task';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { saveTaskToFirebase, getTasksByJoinCode } from '../firebase/taskService';
+import { startGame, stopGame, checkGameStatus } from '../firebase/gameService';
 
 export default function Host() {
   const router = useRouter();
+  const params = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [joinCode] = useState('ABCD');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isGameActive, setIsGameActive] = useState(false);
+  const [gameLoading, setGameLoading] = useState(false);
+  
+  const joinCode = params.code ? String(params.code) : 'ABCD';
+  
+  useEffect(() => {
+    loadTasks();
+    checkGameStatusOnLoad();
+  }, [joinCode]);
+  
+  const checkGameStatusOnLoad = async () => {
+    try {
+      const status = await checkGameStatus(joinCode);
+      setIsGameActive(status === 'active');
+    } catch (error) {
+      console.error('Kunde inte kolla spelstatus:', error);
+    }
+  };
+  
+  const loadTasks = async () => {
+    setIsLoading(true);
+    try {
+      const firebaseTasks = await getTasksByJoinCode(joinCode);
+      setTasks(firebaseTasks);
+    } catch (error) {
+      Alert.alert('Fel', 'Kunde inte ladda uppgifter från servern');
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+  const handleSaveTask = async (taskData: Omit<Task, 'id' | 'createdAt'>) => {
+    try {
+      const taskId = await saveTaskToFirebase(taskData, joinCode);
+      
+      const newTask: Task = {
+        ...taskData,
+        id: taskId,
+        createdAt: new Date(),
+      };
+      
+      setTasks(prev => [newTask, ...prev]);
+      Alert.alert('Klart!', 'Uppgiften är sparad i databasen!');
+    } catch (error) {
+      Alert.alert('Fel', 'Kunde inte spara uppgiften. Försök igen.');
+      console.error(error);
+    }
+  };
 
-  const handleSaveTask = (taskData: Omit<Task, 'id' | 'createdAt'>) => {
-    const newTask: Task = {
-      ...taskData,
-      id: Date.now().toString(),
-      createdAt: new Date(),
-    };
-
-    setTasks(prev => [newTask, ...prev]);
-    Alert.alert('Klart!', 'Uppgiften är skapad!');
+  const handleStartGame = async () => {
+    setGameLoading(true);
+    
+    try {
+      const success = await startGame(joinCode);
+      
+      if (success) {
+        setIsGameActive(true);
+        Alert.alert('Spel startat', 'Spelet är nu aktivt! Gäster kan ansluta.');
+      } else {
+        Alert.alert('Fel', 'Kunde inte starta spelet. Kontrollera Firebase.');
+      }
+    } catch (error) {
+      Alert.alert('Fel', 'Ett fel uppstod vid start av spel: ' + error.message);
+    } finally {
+      setGameLoading(false);
+    }
+  };
+  
+  const handleStopGame = async () => {
+    setGameLoading(true);
+    
+    try {
+      const success = await stopGame(joinCode);
+      
+      if (success) {
+        setIsGameActive(false);
+        Alert.alert('Spel stoppat', 'Spelet är nu avslutat');
+      } else {
+        Alert.alert('Fel', 'Kunde inte stoppa spelet');
+      }
+    } catch (error) {
+      Alert.alert('Fel', 'Ett fel uppstod vid stopp av spel');
+    } finally {
+      setGameLoading(false);
+    }
+  };
+  
+  const handleCopyCode = () => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(joinCode);
+      Alert.alert('Kopierad!', `Koden ${joinCode} har kopierats till urklipp.`);
+    } else {
+      alert(`Anslutningskod: ${joinCode}\n\nDela denna kod med dina gäster!`);
+    }
   };
 
   const openCreateTaskModal = () => {
@@ -50,15 +139,73 @@ export default function Host() {
 
   return (
     <View style={styles.container}>
-      {/* huvudinnehåll */}
       <View style={styles.content}>
-        {/* rubrik */}
         <View style={styles.header}>
-          <Text style={styles.title}>Värdens/hostens dashboard</Text>
+          <Text style={styles.title}>Värdens dashboard</Text>
           <Text style={styles.subtitle}>Anslutningskod: {joinCode}</Text>
+          
+          {/* Game status badge */}
+          <View style={styles.gameStatusContainer}>
+            <View style={[
+              styles.statusBadge, 
+              isGameActive ? styles.statusActive : styles.statusWaiting
+            ]}>
+              <Text style={styles.statusText}>
+                {isGameActive ? ' SPELET KÖR' : ' VÄNTAR'}
+              </Text>
+            </View>
+          </View>
+          
+          {/* Game control buttons */}
+          <View style={styles.gameControls}>
+            {!isGameActive ? (
+              <TouchableOpacity 
+                style={[styles.gameButton, styles.startButton]}
+                onPress={handleStartGame}
+                disabled={gameLoading}
+              >
+                {gameLoading ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <>
+                    <Text style={styles.gameButtonText}> STARTA SPELET</Text>
+                    <Text style={styles.gameButtonSubtext}>Låt gäster gå med</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity 
+                style={[styles.gameButton, styles.stopButton]}
+                onPress={handleStopGame}
+                disabled={gameLoading}
+              >
+                {gameLoading ? (
+                  <ActivityIndicator size="small" color="white" />
+                ) : (
+                  <>
+                    <Text style={styles.gameButtonText}> STOPPA SPELET</Text>
+                    <Text style={styles.gameButtonSubtext}>Inga fler kan gå med</Text>
+                  </>
+                )}
+              </TouchableOpacity>
+            )}
+            
+            <TouchableOpacity 
+              style={[styles.gameButton, styles.copyButton]}
+              onPress={handleCopyCode}
+            >
+              <Text style={styles.gameButtonText}> KOPIERA KOD</Text>
+              <Text style={styles.gameButtonSubtext}>Dela med gäster</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <Text style={styles.codeInfo}>
+            {isGameActive 
+              ? 'Spelet kör! Gäster kan nu ansluta via Guest sidan.'
+              : 'Tryck på "Starta spelet" för att låta gäster gå med.'}
+          </Text>
         </View>
 
-        {/* knapp för att skapa uppgift */}
         <TouchableOpacity 
           style={styles.createButton} 
           onPress={openCreateTaskModal}
@@ -66,17 +213,28 @@ export default function Host() {
           <Text style={styles.createButtonText}>+ Skapa ny uppgift</Text>
         </TouchableOpacity>
 
-        {/* lista med uppgifter */}
         <View style={styles.tasksContainer}>
-          <Text style={styles.sectionTitle}>Uppgifter ({tasks.length})</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Uppgifter ({tasks.length})</Text>
+            <TouchableOpacity onPress={loadTasks} style={styles.refreshButton}>
+              <Text style={styles.refreshText}>Uppdatera</Text>
+            </TouchableOpacity>
+          </View>
           
-          {tasks.length > 0 ? (
+          {isLoading ? (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#151B7C" />
+              <Text style={styles.loadingText}>Laddar uppgifter...</Text>
+            </View>
+          ) : tasks.length > 0 ? (
             <FlatList
               data={tasks}
               renderItem={renderTaskItem}
               keyExtractor={(item) => item.id}
               contentContainerStyle={styles.tasksList}
               showsVerticalScrollIndicator={false}
+              refreshing={isLoading}
+              onRefresh={loadTasks}
             />
           ) : (
             <View style={styles.emptyState}>
@@ -89,31 +247,36 @@ export default function Host() {
         </View>
       </View>
 
-      {/* navigation bar i botten */}
       <View style={styles.navBar}>
         <TouchableOpacity 
           style={[styles.navButton, styles.activeNavButton]}
-          onPress={() => router.push('/host/host' as any)}
+          onPress={() => router.push(`/host/host?code=${joinCode}` as any)}
         >
-          <Text style={styles.navButtonText}>Hem</Text>
+          <Text style={styles.navButtonText}> Hem</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/host/tasks' as any)}
+          onPress={() => router.push(`/host/tasks?code=${joinCode}` as any)}
         >
-          <Text style={styles.navButtonText}>Uppgifter</Text>
+          <Text style={styles.navButtonText}> Uppgifter</Text>
         </TouchableOpacity>
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/settings' as any)}
+          onPress={() => router.push(`/host/settings?code=${joinCode}`)}
         >
-          <Text style={styles.navButtonText}>Inställningar</Text>
+          <Text style={styles.navButtonText}> Inställningar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push(`/host/submissions?code=${joinCode}`)}
+        >
+          <Text style={styles.navButtonText}> Submissions</Text>
         </TouchableOpacity>
       </View>
 
-      {/* popup-fönster för att skapa uppgifter */}
       <TaskCreationModal
         visible={isModalVisible}
         onClose={closeCreateTaskModal}
@@ -131,33 +294,118 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingTop: 50,
-    paddingBottom: 60, // så att navigation bar syns
+    paddingBottom: 60,
   },
   header: {
     padding: 20,
     backgroundColor: '#C5E7FF',
     marginBottom: 20,
+    borderRadius: 10,
+    marginHorizontal: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#151B7C',
     marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#151B7C',
+    fontWeight: '600',
+    textAlign: 'center',
+    marginBottom: 15,
+  },
+  gameStatusContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 15,
+  },
+  statusBadge: {
+    paddingHorizontal: 20,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: 120,
+  },
+  statusActive: {
+    backgroundColor: '#4CAF50',
+  },
+  statusWaiting: {
+    backgroundColor: '#FF9800',
+  },
+  statusText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  gameControls: {
+    flexDirection: 'row',
+    gap: 10,
+    marginBottom: 15,
+  },
+  gameButton: {
+    flex: 1,
+    padding: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  startButton: {
+    backgroundColor: '#4CAF50',
+  },
+  stopButton: {
+    backgroundColor: '#F44336',
+  },
+  copyButton: {
+    backgroundColor: '#2196F3',
+  },
+  gameButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  gameButtonSubtext: {
+    color: 'rgba(255, 255, 255, 0.9)',
+    fontSize: 10,
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  codeInfo: {
+    fontSize: 14,
+    color: '#151B7C',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 5,
   },
   createButton: {
     backgroundColor: '#FFDE7D',
     marginHorizontal: 20,
     marginBottom: 20,
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
   },
   createButtonText: {
-    color: '#A786FF',
+    color: '#B89DFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -165,21 +413,45 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
   },
+  sectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#151B7C',
-    marginBottom: 16,
+  },
+  refreshButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#C5E7FF',
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#151B7C',
+  },
+  refreshText: {
+    color: '#151B7C',
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   tasksList: {
     gap: 12,
+    paddingBottom: 20,
   },
   taskItem: {
     backgroundColor: 'white',
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#C5E7FF',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
   },
   taskTitle: {
     fontSize: 18,
@@ -200,12 +472,24 @@ const styles = StyleSheet.create({
   },
   taskLocation: {
     fontSize: 14,
-    color: '#007AFF',
+    color: '#2196F3',
+    fontWeight: '600',
   },
   taskPoints: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#B89DFF',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 40,
+  },
+  loadingText: {
+    marginTop: 12,
+    fontSize: 16,
+    color: '#151B7C',
   },
   emptyState: {
     paddingVertical: 40,
@@ -231,8 +515,8 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     backgroundColor: '#C5E7FF',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopWidth: 2,
+    borderTopColor: '#151B7C',
     paddingVertical: 10,
     height: 60,
   },
@@ -242,12 +526,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeNavButton: {
-    backgroundColor: '#f0f7ff',
+    backgroundColor: '#AEDDFF',
     borderRadius: 10,
+    marginHorizontal: 5,
   },
   navButtonText: {
-    color: '#007AFF',
-    fontSize: 14,
+    color: '#151B7C',
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });

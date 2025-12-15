@@ -5,21 +5,7 @@ import React from "react";
 // Guest
 export default function Navbar() {
   const router = useRouter();
-
-  /* Försökte göra knapparna animerade vid tryckning, funka typ inte
-  const [scale] = useState(new Animated.Value(1));
-  const handlePressIn = () => {
-    Animated.spring(scale, {
-      toValue: 1.1,
-      useNativeDriver: true,
-    }).start();
-  }
-  const handlePressOut = () => {
-    Animated.spring(scale, {
-      toValue: 1,
-      useNativeDriver: false,
-    }).start();
-  } */
+  
   return (
     <View
       style={{
@@ -29,7 +15,6 @@ export default function Navbar() {
       }}
     >
       <View style={[styles.navbar]}>
-        {/*Denna knapp kanske behöver en bild*/}
         <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/hem")}>
           <Image
             source={require("../guest/image/hemImg.png")}
@@ -40,7 +25,6 @@ export default function Navbar() {
       </View>
       <View style={[styles.navbar]}>
         {" "}
-        {/*Denna knapp kanske behöver en bild*/}
         <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/components/Leaderboard")}>
           <Image
             source={require("../guest/image/LeaderboardImg.png")}
@@ -51,7 +35,6 @@ export default function Navbar() {
       </View>
       <View style={[styles.navbar]}>
         {" "}
-        {/*Denna knapp kanske behöver en bild*/}
         <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/TaskInterface")}>
           <Image
             source={require("../guest/image/cameraImg.png")}
@@ -62,7 +45,6 @@ export default function Navbar() {
       </View>
       <View style={[styles.navbar]}>
         {" "}
-        {/*Denna knapp kanske behöver en bild*/}
         <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/PointList")}>
           <Image
             source={require("../guest/image/ListaImg.png")}
@@ -73,7 +55,6 @@ export default function Navbar() {
       </View>
       <View style={[styles.navbar]}>
         {" "}
-        {/*Denna knapp kanske behöver en bild*/}
         <TouchableOpacity style={styles.TouchableOpacity} onPress={() => router.push("/guest/Profil")}>
           <Image
             source={require("../guest/image/profilImg.png")}

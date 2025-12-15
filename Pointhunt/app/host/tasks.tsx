@@ -54,9 +54,15 @@ export default function AllTasks() {
         
         <TouchableOpacity 
           style={styles.navButton}
-          onPress={() => router.push('/settings' as any)}
+          onPress={() => router.push('/host/settings' as any)}
         >
           <Text style={styles.navButtonText}>Inställningar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={styles.navButton}
+          onPress={() => router.push('/host/submissions' as any)}
+        >
+          <Text style={styles.navButtonText}>Submissions</Text>
         </TouchableOpacity>
       </View>
     </View>
