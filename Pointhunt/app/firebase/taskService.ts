@@ -7,7 +7,10 @@ import {
   query, 
   where, 
   orderBy,
-  serverTimestamp 
+  serverTimestamp,
+  updateDoc,
+  deleteDoc,
+  doc
 } from 'firebase/firestore';
 import { Task } from '../types/Task';
 
@@ -89,4 +92,17 @@ export async function getAllTasks(): Promise<Task[]> {
     console.error('Error getting all tasks from Firebase:', error);
     throw error;
   }
+}
+
+export async function updateTaskInFirebase(taskId: string, updates: Partial<Task>): Promise<void> {
+  const taskRef = doc(db, 'tasks', taskId);
+  await updateDoc(taskRef, {
+    ...updates,
+    updatedAt: serverTimestamp(),
+  });
+}
+
+export async function deleteTaskFromFirebase(taskId: string): Promise<void> {
+  const taskRef = doc(db, 'tasks', taskId);
+  await deleteDoc(taskRef);
 }
