@@ -43,7 +43,7 @@ export default function Guest() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Join!</Text>
+      <Text style={styles.title}>Anslut!</Text>
 
       <TextInput
         placeholder="Skriv kod..."
@@ -53,7 +53,7 @@ export default function Guest() {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleJoin}>
-        <Text style={styles.buttonText}>Join...</Text>
+        <Text style={styles.buttonText}>Anslut...</Text>
       </TouchableOpacity>
     </View>
   );
