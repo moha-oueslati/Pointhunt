@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#B89DFF", 
+    color: "#A786FF", 
     marginTop: 30,
 },
   frame: {
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   taskContainer: {
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     borderRadius: 15,
     padding: 15,
     marginBottom: 15,

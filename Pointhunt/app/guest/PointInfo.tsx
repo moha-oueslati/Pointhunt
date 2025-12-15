@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     points: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: "#FFDE7D",
+        color: "#A786FF",
         marginBottom: 10,
       },
 });

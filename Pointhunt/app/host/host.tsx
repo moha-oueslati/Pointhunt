@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   startButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#B89DFF',
   },
   stopButton: {
     backgroundColor: '#F44336',
@@ -412,7 +412,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   createButtonText: {
-    color: '#151B7C',
+    color: '#B89DFF',
     fontSize: 18,
     fontWeight: 'bold',
   },
@@ -454,11 +454,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#C5E7FF',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    
   },
   taskTitle: {
     fontSize: 18,
@@ -533,13 +529,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeNavButton: {
-    backgroundColor: '#AEDDFF',
+    backgroundColor: 'white',
     borderRadius: 10,
-    marginHorizontal: 5,
+    color: '#151B7C',
+    fontWeight: 'bold',
   },
   navButtonText: {
     color: '#151B7C',
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });

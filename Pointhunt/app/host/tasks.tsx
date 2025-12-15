@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: '#B89DFF',
+    color: '#A786FF',
   },
   emptyState: {
     flex: 1,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
   },
   emptySubtext: {
     fontSize: 16,
-    color: '#B89DFF',
+    color: '#A786FF',
     textAlign: 'center',
     marginBottom: 24,
     lineHeight: 22,
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   backButtonText: {
-    color: '#B89DFF',
+    color: '#A786FF',
     fontSize: 16,
     fontWeight: '600',
   },
@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     backgroundColor: '#C5E7FF',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
+    borderTopWidth: 2,
+    borderTopColor: '#151B7C',
     paddingVertical: 10,
     height: 60,
   },
@@ -143,16 +143,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   activeNavButton: {
-    backgroundColor: '#f0f7ff',
+    backgroundColor: 'white',
     borderRadius: 10,
+    color: '#151B7C',
+    fontWeight: 'bold',
   },
   navButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontSize: 14,
     fontWeight: '600',
   },
   activeNavButtonText: {
-    color: '#007AFF',
+    color: '#151B7C',
     fontWeight: 'bold',
   },
 });

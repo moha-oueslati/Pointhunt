@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#B89DFF", 
+    color: "#A786FF", 
     marginBottom: 40
-  },
-  purpleButton: {
-    backgroundColor: '#B89DFF', //lila
+},
+purpleButton: {
+    backgroundColor: '#A786FF', //lila
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
@@ -87,30 +87,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: 225,
     alignItems: "center",
-  },
-  lightYellowText: {
-    color: '#FFDE7D', //ljusgult
-    fontSize: 18,
-  },
-  lightPurpleText: {
-    color: '#B89DFF', //lila
-    fontSize: 18,
-  },
-  redText: {
-    color: '#8C070C', //mörkrött
-    fontSize: 18,
-  },
-  yellowText: {
-    color: '#CCB307', //gult
-    fontSize: 18,
-  },
-  codeTextfield: { // Till när man lägger in kod
-    paddingVertical: 14,
-    backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
-    borderRadius: 10,
-    width: 225,
-    alignItems: "center",
-  },
+},
+lightYellowText: {
+  color: '#FFDE7D', //ljusgult
+  fontSize: 18,
+},
+lightPurpleText: {
+  color: '#A786FF', //lila
+  fontSize: 18,
+},
+redText: {
+  color: '#8C070C', //mörkrött
+  fontSize: 18,
+},
+yellowText: {
+  color: '#CCB307', //gult
+  fontSize: 18,
+},
+codeTextfield: { // Till när man lägger in kod
+  paddingVertical: 14,
+  backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
+  borderRadius: 10,
+  width: 225,
+  alignItems: "center",
+},
 
 });
 

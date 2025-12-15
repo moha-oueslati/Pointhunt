@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, StyleSheet } from "react-native";
-import Navbar from "./navbar";
+import Navbar from "../guest/navbar";
 
 export default function Hem() {
   return (
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#151B7C",
+    color: "#A786FF",
   },
   teamContainer: {
     marginBottom: 20,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center",
-    color: "#333",
+    color: "#B497FF",
   },
   videoContainer: {
     alignItems: "center",
