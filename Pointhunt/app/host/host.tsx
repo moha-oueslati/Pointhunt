@@ -1,5 +1,5 @@
 // app/host/host.tsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,7 @@ import {
 import TaskCreationModal from '../components/TaskCreationModal';
 import { Task } from '../types/Task';
 import { useRouter, useLocalSearchParams } from 'expo-router';
-import { saveTaskToFirebase, getTasksByJoinCode, updateTaskInFirebase, deleteTaskFromFirebase } from '../firebase/taskService';
+import { saveTaskToFirebase, updateTaskInFirebase, deleteTaskFromFirebase } from '../firebase/taskService';
 import { startGame, stopGame, checkGameStatus } from '../firebase/gameService';
 import { onSnapshot, collection, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
@@ -23,7 +23,6 @@ export default function Host() {
   const params = useLocalSearchParams();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [isGameActive, setIsGameActive] = useState(false);
   const [gameLoading, setGameLoading] = useState(false);
   const [editingTask, setEditingTask] = useState<string | null>(null);
@@ -42,7 +41,7 @@ export default function Host() {
         } as Task));
         setTasks(taskData);
       },
-      (error) => {
+      () => {
         Alert.alert('Fel', 'Kunde inte ladda uppgifter');
         setTasks([]);
       }
@@ -61,7 +60,7 @@ export default function Host() {
     try {
       await saveTaskToFirebase(taskData, joinCode);
       Alert.alert('Klart!', 'Uppgiften är sparad i databasen!');
-    } catch (error) {
+    } catch {
       Alert.alert('Fel', 'Kunde inte spara uppgiften');
     }
   };
@@ -71,7 +70,7 @@ export default function Host() {
       await updateTaskInFirebase(taskId, editForm);
       setEditingTask(null);
       setEditForm({});
-    } catch (error) {
+    } catch {
       Alert.alert('Fel', 'Kunde inte uppdatera uppgiften');
     }
   };
@@ -88,7 +87,7 @@ export default function Host() {
           onPress: async () => {
             try {
               await deleteTaskFromFirebase(taskId);
-            } catch (error) {
+            } catch {
               Alert.alert('Fel', 'Kunde inte ta bort uppgiften');
             }
           }
@@ -105,7 +104,7 @@ export default function Host() {
         setIsGameActive(true);
         Alert.alert('Spel startat', 'Spelet är nu aktivt!');
       }
-    } catch (error) {
+    } catch {
       Alert.alert('Fel', 'Kunde inte starta spelet');
     } finally {
       setGameLoading(false);
@@ -120,7 +119,7 @@ export default function Host() {
         setIsGameActive(false);
         Alert.alert('Spel stoppat', 'Spelet är nu avslutat');
       }
-    } catch (error) {
+    } catch {
       Alert.alert('Fel', 'Kunde inte stoppa spelet');
     } finally {
       setGameLoading(false);
