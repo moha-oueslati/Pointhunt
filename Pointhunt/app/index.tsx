@@ -1,68 +1,99 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
+import { codeGenerate } from "./firebase/codeGenerator";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase/firebase";
 
 export default function Index() {
   const router = useRouter();
 
+
+  //lagra den genererade koden i state
+  const [code, setCode] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    async function run() {
+      const generated = await codeGenerate("placeholder");
+      console.log(generated);
+      setCode(generated);
+    }
+    run();
+  }, []);
+
   return (
     <View style={styles.container}>    
-    <Text style={styles.title}> Welcome to Pointhunt! </Text>
+      <Text style={styles.title}> Välkommen till Pointhunt! </Text>
 
-    <TouchableOpacity style={styles.redButton}
-    accessibilityRole="button"
-    accessibilityLabel="Join as Host"
-    onPress={() => console.log('Join as Host pressed')}
+    <TouchableOpacity
+      style={styles.purpleButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Host"
+      onPress={async () => {
+      if (!code) return;
+
+      //Skapa session i firestore
+      const gameRef = doc(db, "games", code);
+      await setDoc(gameRef, {
+      joinCode: code,
+      status: "waiting",
+      createdAt: serverTimestamp(),
+      players: []
+    });
+
+    //Skicka användaren till host-sidan
+    router.push({ pathname: "/host/host", params: { code } });
+  }}
     >
-    <Text style={styles.lightRedText}> Join as Host </Text>
+      <Text style={styles.lightYellowText}>Gå med som värd </Text>
     </TouchableOpacity>
         
-    <TouchableOpacity style={styles.yellowButton}
-     accessibilityRole="button"
-     accessibilityLabel="Join as Guest"
-     onPress={() => router.push('/guest')} 
-
+    <TouchableOpacity
+      style={styles.yellowButton}
+      accessibilityRole="button"
+      accessibilityLabel="Join as Guest"
+      onPress={() => router.push('/guest/guest' as any)}
     >
-      <Text style={styles.lightYellowText}> Join as Guest </Text>
+      <Text style={styles.lightPurpleText}>Gå med som gäst </Text>
     </TouchableOpacity>
     </View>
-  ); 
+  );
 }
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#151B7C" //Mörkblått till bakgrunden
-},
-title: {
+    backgroundColor: "#AEDDFF" //Mörkblått till bakgrunden
+  },
+  title: {
     fontSize: 32,
     fontWeight: "bold",
-    color: "#CCB307", //Gult
+    color: "#A786FF", 
     marginBottom: 40
 },
-redButton: {
-    backgroundColor: '#8C070C', //mörkrött
+purpleButton: {
+    backgroundColor: '#A786FF', //lila
     paddingVertical: 14,
     borderRadius: 10,
     marginBottom: 20,
     width: 225,
     alignItems: "center",
-},
-yellowButton: {
-    backgroundColor: '#CCB307', //gult
+  },
+  yellowButton: {
+    backgroundColor: '#FFDE7D', //gult
     paddingVertical: 14,
     borderRadius: 10,
     width: 225,
     alignItems: "center",
 },
-lightRedText: {
-  color: '#FFAEB1', //rosa
+lightYellowText: {
+  color: '#FFDE7D', //ljusgult
   fontSize: 18,
 },
-lightYellowText: {
-  color: '#FFF8C7', //ljusgult
+lightPurpleText: {
+  color: '#A786FF', //lila
   fontSize: 18,
 },
 redText: {
@@ -80,15 +111,7 @@ codeTextfield: { // Till när man lägger in kod
   width: 225,
   alignItems: "center",
 },
-writeTextfield: { // För hostsidan när man skriver in titel/namn på host
-  paddingVertical: 8,
-  backgroundColor: "rgba(140, 7, 12, 0.75)", //mörkrött 25% transparent
-  borderRadius: 8,
-  borderWidth: 2,
-  borderColor: '#CCB307', //gul ram
-  marginBottom: 20,
-  width: 225,
-}
+
 });
 
 
